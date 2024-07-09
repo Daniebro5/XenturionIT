@@ -1,246 +1,188 @@
 import Foundation
 
-// MARK: funciones
+// MARK: - Funciones
 
+// Función simple para sumar dos enteros.
 func suma(a: Int, b: Int) -> Int {
     return a + b
 }
 
-// String interpolation es inyectar valores en una cadena \(valor)
-print("La suma de 3 y 5 es \( suma(a: 3, b: 5) )")
+// Uso de interpolación de cadenas para mostrar el resultado de la suma.
+print("La suma de 3 y 5 es \(suma(a: 3, b: 5))")
 
-// MARK: tipos de datos compuestos
-// tupla, varios datos en una sola variable (a,b,c,.....)
+// MARK: - Tipos de Datos Compuestos
 
-let productoCelular = (nombre: "S23 Ultra Plus Pro Max", precio: 1099.99, anio: 2023)
-print(productoCelular.nombre)
+// Uso de tuplas para almacenar múltiples valores en una variable.
+let detalleCelular = (nombre: "S23 Ultra Plus Pro Max", precio: 1099.99, año: 2023)
+print("El modelo \(detalleCelular.nombre) del año \(detalleCelular.año) cuesta \(detalleCelular.precio) dólares.")
 
-// diccionario, asociaciones de clave-valor
+// Diccionario para asociar nombres de productos con sus precios.
 var precios: [String: String] = [
     "coca-cola": "0.50",
     "camara sony": "1200",
     "teclado": "5"
 ]
-let precioCocaCola: String = precios["coca-cola"] ?? "no existe"
-print("La cocacola cuesta: \(precioCocaCola)")
 
-let precioPepsi: String = precios["pepsi"] ?? "no existe"
-print("La pepsi cuesta: \(precioPepsi)")
+// Uso de opcional para manejar valores que podrían no existir.
+let precioCocaCola: String = precios["coca-cola"] ?? "no disponible"
+print("La Coca-Cola cuesta: \(precioCocaCola)")
 
-// Opcionales
-let regaloEnteroDesenvuelto: Int = 10
+let precioPepsi: String = precios["pepsi"] ?? "no disponible"
+print("La Pepsi cuesta: \(precioPepsi)")
 
-// caja envuelta
-let regaloEnteroEnvuelto: Int? = 10
+// MARK: - Opcionales
 
-// safe unwrap - desenvoltura segura
-if let regaloDesenvuelto = regaloEnteroEnvuelto {
-    print(regaloDesenvuelto)
+// Ejemplo de cómo desempaquetar un opcional de manera segura con if let.
+if let regaloDesenvuelto = precios["regalo"] {
+    print("El regalo cuesta: \(regaloDesenvuelto)")
 } else {
-    // mostrar el error
-    print("el regalo estaba vacio")
+    print("El regalo no tiene precio asignado.")
 }
 
-// valor por defecto
-print(regaloEnteroEnvuelto ?? 666)
+// Ejemplo de coalescencia de nil para proporcionar un valor por defecto.
+print("El precio del regalo es: \(precios["regalo"] ?? "0")")
 
-// force unwrap - desenvoltura forzada
-// EVITAR los force unwrap
-print(regaloEnteroEnvuelto!)
+// MARK: - Clases y Estructuras
 
-// nil coalesing
+// Clase Persona con métodos que pueden retornar valores opcionales.
 class Persona {
-    func dameUnNumero() -> Int? {
+    func obtenerUnNúmero() -> Int? {
         return 42
     }
 
-    func dameUnPerro() -> Perro? {
+    func obtenerUnPerro() -> Perro? {
         return Perro()
     }
 }
 
 struct Perro {
-    func ladrar() -> String? {
+    func ladrar() -> String {
         return "ladrando"
     }
 }
 
+// Creación de una instancia de Persona y uso de métodos opcionales.
 let hugo = Persona()
-hugo.dameUnNumero()
-hugo.dameUnPerro()?.ladrar() // si no existe akguna de sus partes todo retorna nil
-
-if let perro = hugo.dameUnPerro() {
-    perro.ladrar()
+if let número = hugo.obtenerUnNúmero() {
+    print("Hugo tiene el número \(número).")
+}
+if let perro = hugo.obtenerUnPerro() {
+    print("El perro está \(perro.ladrar()).")
 } else {
-    print("no existe perro")
+    print("Hugo no tiene perro.")
 }
 
+// MARK: - Estructuras de Control
 
-// MARK: Estructuras de control
-
-let someCharacter: Character = "æ"
-
-// permite el manejo de rangos
-switch someCharacter {
-case "a", "e", "i", "o", "u":
-    print("\(someCharacter) es una vocal.")
-case "b", "c", "d", "f":
-    print("\(someCharacter) es una consonante.")
-default:
-    print("\(someCharacter) no es ni vocal ni consonante.")
-}
-
-enum Sexo {
-    case masculino
-    case femenino
-    case noBinario
-    case otro
-}
-
-let miSexo: Sexo = .otro
-
-switch miSexo {
-case .masculino, .femenino:
-    print("Soy binario")
-case .noBinario:
-    print("Soy no binario")
-case .otro:
-    print("Soy otro")
-}
-
-let habitantesGuayaquil = 500_000
-switch habitantesGuayaquil {
+// Ejemplo de switch para manejar múltiples casos con rangos.
+let poblaciónGuayaquil = 500_000
+switch poblaciónGuayaquil {
 case 0:
-    print("No hay habitantes")
-case 1 ..< 100_000:
-    print("Es una ciudad pequeña")
-case 100_000 ..< 500_000:
-    print("es una ciudad mediana")
+    print("No hay habitantes.")
+case 1..<100_000:
+    print("Es una ciudad pequeña.")
+case 100_000..<500_000:
+    print("Es una ciudad mediana.")
 default:
-    print("es una metrópoli")
+    print("Es una metrópoli.")
 }
 
+// MARK: - Manejo de Errores
 
-// MARK: manejo de errores
 enum ImpresoraError: Error {
-    case noHayPapel
-    case noHayTinta
+    case sinPapel
+    case sinTinta
     case enLlamas
 }
 
-// la funcion imprimir puede retornar algun error
-func imprimir(pagina: Int) throws {
-    // guard para chequear que las entradas cumplan ciertos criterios
-    guard pagina > 0 else {
+// Función que puede lanzar un error al imprimir.
+func imprimir(página: Int) throws {
+    guard página > 0 else {
         throw ImpresoraError.enLlamas
     }
-    print( "Pagina impresa")
+    print("Página impresa")
 }
 
-func imprimir2(pagina: Int) throws {
-    // guard para chequear que las entradas cumplan ciertos criterios
-    guard pagina > 0 else {
-        throw ImpresoraError.enLlamas
-    }
-    print( "Pagina impresa")
-}
-
+// Uso de do-catch para manejar errores.
 do {
-    try imprimir(pagina: 86)
-    try imprimir2(pagina: 86)
+    try imprimir(página: 86)
 } catch ImpresoraError.enLlamas {
-    print("se quema la ofi")
+    print("La impresora está en llamas.")
 } catch {
-    print("ocurrio un error", error)
+    print("Ocurrió un error: \(error)")
 }
 
-try? imprimir(pagina: 0)
-
-
-let regaloEnvuelto: Int? = nil
-
-if let regaloDesenvuelto = regaloEnvuelto {
-    print(regaloDesenvuelto)
-} else {
-    print("lampara oe ctm no habia nada en el regalo")
-}
-
-func hola(saludar: Int?) {
-    guard let numeroDeSaludos = saludar else {
-        print("saludando 1 sola vez")
+// Ejemplo de gestión opcional y error con guard let.
+func saludar(conNúmeroDe veces: Int?) {
+    guard let veces = veces else {
+        print("Saludar una vez.")
         return
     }
-    print("saludando \(numeroDeSaludos)")
+    print("Saludar \(veces) veces.")
 }
 
-hola(saludar: nil)
+saludar(conNúmeroDe: nil)
 
-//
+// MARK: - Protocolos y Delegación
 
-var estoyFeliz: Bool = false
-print(estoyFeliz)
-estoyFeliz.toggle()
-print(estoyFeliz)
+// MARK: - Definición de la Estructura Tarea
 
+// La estructura 'Tarea' representa una tarea individual con un título, descripción y un estado de completitud.
 struct Tarea {
-    var titulo: String
-    var descripcion: String
+    var título: String
+    var descripción: String
     var estaCompletada: Bool
 }
 
-// Array
-// var listaDeTareas: [Tarea] = []
-var listaDeTareas = [Tarea]()
+// MARK: - Protocolo GestorDeTareas
 
-protocol Gestor {
+// El protocolo 'GestorDeTareas' define los métodos que debe implementar cualquier gestor de tareas.
+protocol GestorDeTareas {
     func añadir(tarea: Tarea)
     func eliminar(indice: Int)
     func editar(indice: Int, nuevaTarea: Tarea)
     func listarTodas()
-    func completarTarea(indice: Int)
 }
 
-final class GestorDeTareas: Gestor {
+// MARK: - Implementación del Gestor de Tareas
+
+// 'GestorDeTareasImpl' es una clase que implementa el protocolo 'GestorDeTareas'.
+// Gestiona una colección de tareas permitiendo añadir, eliminar, editar y listar tareas.
+final class GestorDeTareasImpl: GestorDeTareas {
+    private var tareas = [Tarea]()
+
     func añadir(tarea: Tarea) {
-        // [a,b] append(c) [a,b,c]
-        listaDeTareas.append(tarea)
+        tareas.append(tarea)
+        print("Tarea añadida: \(tarea.título)")
     }
 
     func eliminar(indice: Int) {
-        // el indice en Swift empieza en 0
-        listaDeTareas.remove(at: indice)
-    }
-
-    func editar(indice: Int, nuevaTarea: Tarea) {
-        listaDeTareas[indice] = nuevaTarea
-    }
-
-    func listarTodas() {
-        print("********")
-        listaDeTareas.forEach { tarea in
-            print(tarea.titulo, tarea.descripcion, tarea.estaCompletada, "\n")
+        if indice < tareas.count {
+            tareas.remove(at: indice)
+            print("Tarea eliminada.")
+        } else {
+            print("Índice fuera de rango.")
         }
     }
 
-    func completarTarea(indice: Int) {
-        var tarea = listaDeTareas.remove(at: indice)
-        tarea.estaCompletada = true
-        listaDeTareas.insert(tarea, at: indice)
+    func editar(indice: Int, nuevaTarea: Tarea) {
+        if indice < tareas.count {
+            tareas[indice] = nuevaTarea
+            print("Tarea editada: \(nuevaTarea.título)")
+        } else {
+            print("Índice fuera de rango.")
+        }
+    }
+
+    func listarTodas() {
+        print("Listando todas las tareas:")
+        tareas.forEach { tarea in
+            print("\(tarea.título): \(tarea.descripción) - Completada: \(tarea.estaCompletada)")
+        }
     }
 }
 
-let gestor = GestorDeTareas()
-
-gestor.añadir(tarea: Tarea(titulo: "Luiggi organizar fiesta sorpresa para Andrea",
-                           descripcion: "comprar globos, pastel de helado de menta con chocolate sin que se entere",
-                           estaCompletada: false))
-gestor.añadir(tarea: Tarea(titulo: "Hugo preparar su disfraz",
-                           descripcion: "hugo necesita un difraz de ironman para la fiesta de disfraces de Datafast",
-                           estaCompletada: false))
-
-gestor.listarTodas()
-gestor.eliminar(indice: 1)
-gestor.listarTodas()
-
-gestor.completarTarea(indice: 0)
+// Ejemplo de uso
+let gestor = GestorDeTareasImpl()
+gestor.añadir(tarea: Tarea(título: "Comprar Ingredientes", descripción: "Comprar ingredientes para la cena de mañana.", estaCompletada: false))
 gestor.listarTodas()
