@@ -54,7 +54,7 @@ final class CocktailViewModel: ObservableObject {
 
     /// Obtiene cócteles alcohólicos utilizando `Combine` para trabajar con flujos de datos.
     func fetchCocktails() {
-        guard let url = URL(string: "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic") else {
+        guard cocktails.isEmpty, let url = URL(string: "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic") else {
             return // Finaliza temprano si la URL no es válida.
         }
 
