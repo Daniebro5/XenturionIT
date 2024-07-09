@@ -25,6 +25,8 @@
 		9541042D2C3385400068DE04 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9541042C2C3385400068DE04 /* ExampleTests.swift */; };
 		954104372C3385400068DE04 /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954104362C3385400068DE04 /* ExampleUITests.swift */; };
 		954104392C3385400068DE04 /* ExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954104382C3385400068DE04 /* ExampleUITestsLaunchTests.swift */; };
+		95A971452C3DEBF30047B4F7 /* CocktailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A971442C3DEBF30047B4F7 /* CocktailViewModelTests.swift */; };
+		95A971472C3DEE2F0047B4F7 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A971462C3DEE2F0047B4F7 /* MockURLSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		954104322C3385400068DE04 /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		954104362C3385400068DE04 /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 		954104382C3385400068DE04 /* ExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		95A971442C3DEBF30047B4F7 /* CocktailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailViewModelTests.swift; sourceTree = "<group>"; };
+		95A971462C3DEE2F0047B4F7 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				9541042C2C3385400068DE04 /* ExampleTests.swift */,
+				95A971442C3DEBF30047B4F7 /* CocktailViewModelTests.swift */,
+				95A971462C3DEE2F0047B4F7 /* MockURLSession.swift */,
 			);
 			path = ExampleTests;
 			sourceTree = "<group>";
@@ -314,7 +320,9 @@
 			files = (
 				9541042D2C3385400068DE04 /* ExampleTests.swift in Sources */,
 				9525EFD52C3C924900E29AD7 /* Cocktail.swift in Sources */,
+				95A971452C3DEBF30047B4F7 /* CocktailViewModelTests.swift in Sources */,
 				9525EFE02C3CA31E00E29AD7 /* CocktailListView.swift in Sources */,
+				95A971472C3DEE2F0047B4F7 /* MockURLSession.swift in Sources */,
 				9525EFE52C3CAF6300E29AD7 /* CocktailDetailView.swift in Sources */,
 				9525EFDB2C3C96B600E29AD7 /* CocktailViewModel.swift in Sources */,
 			);
