@@ -1,15 +1,13 @@
 import Foundation
 
+// Definición de la estructura Tarea.
 struct Tarea {
     var titulo: String
     var descripcion: String
     var estaCompletada: Bool
 }
 
-// Array
-// var listaDeTareas: [Tarea] = []
-var listaDeTareas = [Tarea]()
-
+// Definición del protocolo Gestor.
 protocol Gestor {
     func añadir(tarea: Tarea)
     func eliminar(indice: Int)
@@ -18,43 +16,63 @@ protocol Gestor {
     func completarTarea(indice: Int)
 }
 
+// Implementación final de la clase GestorDeTareas que conforma al protocolo Gestor.
 final class GestorDeTareas: Gestor {
-    let tareas = [Tarea]()
+    // Lista para almacenar las tareas.
+    var tareas = [Tarea]()
 
+    // Método para añadir una tarea a la lista.
     func añadir(tarea: Tarea) {
-        // [a,b] append(c) [a,b,c]
         tareas.append(tarea)
     }
 
+    // Método para eliminar una tarea por índice.
     func eliminar(indice: Int) {
-        // el indice en Swift empieza en 0
+        guard indice < tareas.count else {
+            print("Índice fuera de rango.")
+            return
+        }
         tareas.remove(at: indice)
     }
 
+    // Método para editar una tarea existente.
     func editar(indice: Int, nuevaTarea: Tarea) {
-        listaDeTareas[indice] = nuevaTarea
+        guard indice < tareas.count else {
+            print("Índice fuera de rango.")
+            return
+        }
+        tareas[indice] = nuevaTarea
     }
 
+    // Método para listar todas las tareas y mostrar su estado.
     func listarTodas() {
-        tareas.forEach { tarea in
-            print(tarea.descripcion, tarea.estaCompletada, "\n")
+        for tarea in tareas {
+            print("Título: \(tarea.titulo), Descripción: \(tarea.descripcion), Completada: \(tarea.estaCompletada)")
         }
     }
 
+    // Método para marcar una tarea como completada.
     func completarTarea(indice: Int) {
-        let tarea = listaDeTareas.remove(at: indice)
+        guard indice < tareas.count else {
+            print("Índice fuera de rango.")
+            return
+        }
+        var tarea = tareas[indice]
         tarea.estaCompletada = true
-        listaDeTareas.insert(tarea, at: indice)
+        tareas[indice] = tarea
     }
 }
 
+// Ejemplo de uso de GestorDeTareas.
 let gestor = GestorDeTareas()
 
-gestor.añadir(tarea: Tarea(titulo: "Luiggi organizar fiesta sorpresa para Andrea",
-                           descripcion: "comprar globos, pastel de helado de menta con chocolate sin que se entere",
+// Añadir tareas.
+gestor.añadir(tarea: Tarea(titulo: "Organizar fiesta sorpresa para Andrea",
+                           descripcion: "Comprar globos, pastel de helado de menta con chocolate sin que se entere.",
                            estaCompletada: false))
-gestor.añadir(tarea: Tarea(titulo: "Hugo preparar su disfraz",
-                           descripcion: "hugo necesita un difraz de ironman para la fiesta de disfraces de Datafast",
+gestor.añadir(tarea: Tarea(titulo: "Preparar disfraz para Hugo",
+                           descripcion: "Hugo necesita un disfraz de Iron Man para la fiesta de disfraces de Datafast.",
                            estaCompletada: false))
 
+// Listar todas las tareas.
 gestor.listarTodas()
