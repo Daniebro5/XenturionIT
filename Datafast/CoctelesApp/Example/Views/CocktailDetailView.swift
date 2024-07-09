@@ -30,7 +30,7 @@ struct CocktailDetailView: View {
                         Text("Cargando imagen...")
                             .foregroundColor(.gray)
                     }
-                    .blur(radius: 15) // Aplica un desenfoque para un efecto estético.
+                    .blur(radius: 5) // Aplica un desenfoque para un efecto estético.
                     .padding(.bottom, 50)
                 } else {
                     Text("Imagen no disponible")

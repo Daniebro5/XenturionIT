@@ -9,18 +9,20 @@ struct CocktailListView: View {
     var body: some View {
         // NavigationView permite la navegación entre vistas, en este caso, a los detalles del cóctel.
         NavigationView {
-            // List genera una lista de elementos extraídos del array 'cocktails' en el viewModel.
-            List(viewModel.cocktails, id: \.id) { cocktail in
-                // NavigationLink crea un enlace que, cuando se toca, lleva al usuario a la vista de detalle del cóctel seleccionado.
-                NavigationLink(destination: CocktailDetailView(cocktail: cocktail)) {
-                    // Cada elemento de la lista muestra el nombre del cóctel.
-                    Text(cocktail.nombre)
+            VStack {
+                TextField("Buscar Cócteles", text: $viewModel.searchText)
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                List(viewModel.cocktails, id: \.id) { cocktail in
+                    NavigationLink(destination: CocktailDetailView(cocktail: cocktail)) {
+                        Text(cocktail.nombre)
+                    }
                 }
-            }
-            // onAppear se dispara cuando la vista aparece en pantalla.
-            .onAppear {
-                // Llama a fetchCocktails para cargar los datos de los cócteles.
-                viewModel.fetchCocktails()
+                .onAppear {
+                    viewModel.fetchCocktails()
+                }
             }
         }
     }
