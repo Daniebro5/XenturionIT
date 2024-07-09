@@ -1,45 +1,47 @@
 import Combine
 import Foundation
 
-// final hace que una clase no se pueda heredar
-// cuando nuestra app va creciendo, el numero de clases va aumentando
-// el compilador va a tener que chequear que cada clase hija, herede bien de sus padres
-// con final hacemos que el compilador se salte estos chequeos y simplemente nos de error
+/// `CocktailViewModel` maneja la lógica de negocio para buscar y mostrar cócteles.
+/// Se marca como `final` para optimizar el tiempo de compilación evitando la herencia.
 final class CocktailViewModel: ObservableObject {
+    // Publica cambios en `searchText` y `cocktails` para que la vista pueda actualizarse en respuesta.
     @Published var searchText = ""
     @Published var cocktails = [Cocktail]()
 
+    // Mantenimiento de las suscripciones Combine.
     private var cancellables: Set<AnyCancellable> = []
 
+    /// Inicializa el ViewModel, configurando la suscripción a cambios en `searchText`.
     init() {
         $searchText
-            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-            .removeDuplicates() // hola holas hola holas hola
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main) // Reduce la carga de trabajo al minimizar las búsquedas frecuentes.
+            .removeDuplicates() // Evita búsquedas repetitivas con el mismo texto.
             .sink { [weak self] searchText in
-                guard let self else { return }
-                self.fetchCocktail(query: searchText)
+                guard let self = self else { return }
+                self.fetchCocktail(query: searchText) // Busca cócteles según el texto de búsqueda.
             }
             .store(in: &cancellables)
     }
 
-
+    /// Realiza la búsqueda de cócteles basada en un texto de consulta.
     func fetchCocktail(query: String) {
-        // es el puente entre lo serial y concurrente
-        // task envia lo de adentro hacia un hilo en background
         Task {
             do {
-                let cocteles = try await loadCocktails(query: query)
+                let cocktails = try await loadCocktails(query: query)
+                // Actualiza la UI en el hilo principal.
                 DispatchQueue.main.async {
-                    self.cocktails = cocteles
+                    self.cocktails = cocktails
                 }
             } catch {
-                print("Error fetching cocktails \(error)")
-                self.cocktails = []
+                print("Error fetching cocktails: \(error)")
+                DispatchQueue.main.async {
+                    self.cocktails = [] // Presenta una lista vacía en caso de error.
+                }
             }
         }
     }
 
-    // nuevo enfoque para llamadas usando async/await
+    /// Carga los cócteles de forma asincrónica utilizando `async/await`.
     private func loadCocktails(query: String) async throws -> [Cocktail] {
         guard let url = URL(string: "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=\(query)") else {
             throw URLError(.badURL)
@@ -50,31 +52,18 @@ final class CocktailViewModel: ObservableObject {
         return decodedResponse.drinks
     }
 
-//    @MainActor - ahora se usan Actors para controlan concurrencia
+    /// Obtiene cócteles alcohólicos utilizando `Combine` para trabajar con flujos de datos.
     func fetchCocktails() {
-        // obteniendo la url para los cocteles alcoholicos
-        // hacemos un safe unwrap xq URL() nos devuelve un opcional
         guard let url = URL(string: "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic") else {
-            return
+            return // Finaliza temprano si la URL no es válida.
         }
 
-        // Session de networking que se ejecuta en paralelo
-        // por defect usamos HTTPS y GET
         URLSession.shared.dataTaskPublisher(for: url)
-        // mapeamos para obtener la data de la respuesta (objeto JSON)
             .map { $0.data }
-        // usamos los modelos con CODABLE para deserializar el JSON
             .decode(type: CocktailResponse.self, decoder: JSONDecoder())
-        // mapeamos la respuesta y obtenemos el valor de la clave drinks
             .map { $0.drinks }
-        // sustituimos cualquier error con un array vacío
-            .replaceError(with: [])
-        // depues de hacer la llamada volvemos al hilo principal
-            .receive(on: DispatchQueue.main)
-        // asignamos los datos a la variable cocktails
-            .assign(to: &$cocktails)
+            .replaceError(with: []) // Utiliza un array vacío en caso de error.
+            .receive(on: DispatchQueue.main) // Asegura que la UI se actualice en el hilo principal.
+            .assign(to: &$cocktails) // Actualiza `cocktails` con los resultados.
     }
 }
-
-// todo lo que tenga que ver con interfaz gráfica va a ser ejecutado en el hilo principal
-// para que no existan trabas, errores de congelamiento, etc para el usuario
