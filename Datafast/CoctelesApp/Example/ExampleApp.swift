@@ -10,7 +10,7 @@ struct ExampleApp: App {
         WindowGroup {
             // CocktailListView es la vista raíz que se muestra al iniciar la aplicación.
             // Desde aquí, los usuarios pueden comenzar su interacción con la funcionalidad de la aplicación.
-            CocktailListView()
+            AnimatedCocktailView()
         }
     }
 }
