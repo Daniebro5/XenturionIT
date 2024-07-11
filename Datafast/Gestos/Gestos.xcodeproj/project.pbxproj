@@ -8,17 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		95D5568A2C4081FC00717F57 /* GestosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D556892C4081FC00717F57 /* GestosApp.swift */; };
-		95D5568C2C4081FC00717F57 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D5568B2C4081FC00717F57 /* ContentView.swift */; };
+		95D5568C2C4081FC00717F57 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D5568B2C4081FC00717F57 /* CardView.swift */; };
 		95D5568E2C4081FE00717F57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95D5568D2C4081FE00717F57 /* Assets.xcassets */; };
 		95D556912C4081FE00717F57 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95D556902C4081FE00717F57 /* Preview Assets.xcassets */; };
+		95D556982C4092AE00717F57 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D556972C4092AE00717F57 /* Card.swift */; };
+		95D5569A2C4095BE00717F57 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D556992C4095BE00717F57 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		95D556862C4081FC00717F57 /* Gestos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gestos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95D556892C4081FC00717F57 /* GestosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestosApp.swift; sourceTree = "<group>"; };
-		95D5568B2C4081FC00717F57 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		95D5568B2C4081FC00717F57 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		95D5568D2C4081FE00717F57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95D556902C4081FE00717F57 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		95D556972C4092AE00717F57 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		95D556992C4095BE00717F57 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,9 +56,11 @@
 			isa = PBXGroup;
 			children = (
 				95D556892C4081FC00717F57 /* GestosApp.swift */,
-				95D5568B2C4081FC00717F57 /* ContentView.swift */,
+				95D5568B2C4081FC00717F57 /* CardView.swift */,
 				95D5568D2C4081FE00717F57 /* Assets.xcassets */,
 				95D5568F2C4081FE00717F57 /* Preview Content */,
+				95D556972C4092AE00717F57 /* Card.swift */,
+				95D556992C4095BE00717F57 /* MainView.swift */,
 			);
 			path = Gestos;
 			sourceTree = "<group>";
@@ -137,7 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95D5568C2C4081FC00717F57 /* ContentView.swift in Sources */,
+				95D5568C2C4081FC00717F57 /* CardView.swift in Sources */,
+				95D5569A2C4095BE00717F57 /* MainView.swift in Sources */,
+				95D556982C4092AE00717F57 /* Card.swift in Sources */,
 				95D5568A2C4081FC00717F57 /* GestosApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
