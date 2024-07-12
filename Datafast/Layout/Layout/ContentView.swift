@@ -2,21 +2,39 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    VStack(alignment: .trailing) {
-      Text("Hello, World!")
-        .alignmentGuide(.trailing) { d in d[.leading] }
-        .background(.blue)
-      Text("otra cadena")
-        .alignmentGuide(.trailing) { d in d[.leading] }
-        .background(.brown)
-      Text("otra cadena 2")
-        .alignmentGuide(.trailing) { d in d[.trailing] }
-        .background(.cyan)
+    HStack(alignment: .midAccountAndName) {
+      VStack {
+        Text("@iamdanniandre")
+          .alignmentGuide(.midAccountAndName) { d in
+            d[VerticalAlignment.center]
+          }
+        Image(systemName: "person.crop.circle")
+          .resizable()
+          .frame(width: 64, height: 64)
+      }
+
+      VStack {
+        Text("Full Name:")
+        Text("Danni André")
+          .alignmentGuide(.midAccountAndName) { d in
+            d[VerticalAlignment.center]
+          }
+          .font(.largeTitle)
+      }
     }
-    .background(.red)
   }
 }
 
 #Preview {
   ContentView()
+}
+
+extension VerticalAlignment {
+  struct MidAccountAndName: AlignmentID {
+    static func defaultValue(in context: ViewDimensions) -> CGFloat {
+      context[.top]
+    }
+  }
+
+  static let midAccountAndName = VerticalAlignment(MidAccountAndName.self)
 }
