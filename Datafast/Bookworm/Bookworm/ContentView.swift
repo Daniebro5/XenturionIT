@@ -32,6 +32,9 @@ struct ContentView: View {
           showingAddScreen.toggle()
         }
       }
+      .navigationDestination(for: Book.self) { book in
+        DetailView(book: book)
+      }
     }
     .sheet(isPresented: $showingAddScreen) {
       AddBookView()
