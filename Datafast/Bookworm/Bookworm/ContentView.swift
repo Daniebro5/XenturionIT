@@ -3,7 +3,10 @@ import SwiftUI
 
 struct ContentView: View {
   @Environment(\.modelContext) var modelContext
-  @Query(sort: \Book.rating, order: .reverse) var books: [Book]
+  @Query(sort: [
+    SortDescriptor(\Book.rating, order: .reverse),
+    SortDescriptor(\Book.autor),
+  ]) var books: [Book]
 
   @State private var showingAddScreen = false
 
