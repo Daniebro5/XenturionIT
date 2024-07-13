@@ -1,24 +1,25 @@
-//
-//  ContentView.swift
-//  HotProspects
-//
-//  Created by Danni Andre Brito Morales on 13/7/24.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+
+  let users = ["Danni", "Hugo", "Andrea", "Luis"]
+
+  @State private var selection = Set<String>()
+
+  var body: some View {
+    TabView {
+      Text("Tab 1")
+        .tabItem {
+          Label("Uno", systemImage: "star")
         }
-        .padding()
+      Text("Tab 2")
+        .tabItem {
+          Label("Dos", systemImage: "circle")
+        }
     }
+  }
 }
 
 #Preview {
-    ContentView()
+  ContentView()
 }
