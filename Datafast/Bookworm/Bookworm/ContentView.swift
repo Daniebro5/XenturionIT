@@ -9,13 +9,29 @@ struct ContentView: View {
 
   var body: some View {
     NavigationStack {
-      Text("Cuenta: \(books.count)")
-        .navigationTitle("Bookworm")
-        .toolbar {
-          Button("Add Book", systemImage: "plus") {
-            showingAddScreen.toggle()
+      List {
+        ForEach(books) { book in
+          NavigationLink(value: book) {
+            HStack {
+              EmojiRatingView(rating: book.rating)
+                .font(.largeTitle)
+
+              VStack(alignment: .leading) {
+                Text(book.titulo)
+                  .font(.headline)
+                Text(book.autor)
+                  .foregroundStyle(.secondary)
+              }
+            }
           }
         }
+      }
+      .navigationTitle("Bookworm")
+      .toolbar {
+        Button("Add Book", systemImage: "plus") {
+          showingAddScreen.toggle()
+        }
+      }
     }
     .sheet(isPresented: $showingAddScreen) {
       AddBookView()
