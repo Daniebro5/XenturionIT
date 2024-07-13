@@ -1,3 +1,4 @@
+import SwiftData
 import SwiftUI
 
 struct ProspectsView: View {
@@ -7,6 +8,9 @@ struct ProspectsView: View {
   }
 
   let filter: FilterType
+
+  @Environment(\.modelContext) var modelContext
+  @Query(sort: \Prospect.name) var prospects: [Prospect]
 
   var body: some View {
     NavigationStack {
