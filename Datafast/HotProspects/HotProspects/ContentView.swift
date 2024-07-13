@@ -2,20 +2,24 @@ import SwiftUI
 
 struct ContentView: View {
 
-  let users = ["Danni", "Hugo", "Andrea", "Luis"]
-
-  @State private var selection = Set<String>()
+  @State private var selectedTab = "Uno"
 
   var body: some View {
-    TabView {
-      Text("Tab 1")
-        .tabItem {
-          Label("Uno", systemImage: "star")
-        }
-      Text("Tab 2")
-        .tabItem {
-          Label("Dos", systemImage: "circle")
-        }
+    TabView(selection: $selectedTab) {
+      Button("Show Tab 2") {
+        selectedTab = "Dos"
+      }
+      .tabItem {
+        Label("Uno", systemImage: "star")
+      }
+      .tag("Uno")
+      Button("Show Tab 1") {
+        selectedTab = "Uno"
+      }
+      .tabItem {
+        Label("Dos", systemImage: "circle")
+      }
+      .tag("Dos")
     }
   }
 }
