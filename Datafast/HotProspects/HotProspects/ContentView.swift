@@ -6,34 +6,26 @@ struct ContentView: View {
   @State private var backgroundColor = Color.red
 
   var body: some View {
-    VStack {
-      Button("Pedir permisos") {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-          if success {
-            print("Lo logré")
-          } else if let error {
-            print(error.localizedDescription)
-          }
+    TabView {
+      ProspectsView(filter: .none)
+        .tabItem {
+          Label("Everyone", systemImage: "person.3")
         }
-      }
 
-      Button("Programar notificacion") {
-        let content = UNMutableNotificationContent()
-        content.title = "Colgar la ropa"
-        content.subtitle = "Si no está lloviendo"
-        content.sound = UNNotificationSound.default
+      ProspectsView(filter: .contacted)
+        .tabItem {
+          Label("Contacted", systemImage: "checkmark.circle")
+        }
 
-        // mostraremos la notificacion despues de 5 segundos que se crea
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5,
-                                                        repeats: false)
+      ProspectsView(filter: .uncontacted)
+        .tabItem {
+          Label("Uncontacted", systemImage: "questionmark.diamond")
+        }
 
-        let request = UNNotificationRequest(identifier: UUID().uuidString,
-                                            content: content,
-                                            trigger: trigger)
-
-        // añadimos nuestra peticion
-        UNUserNotificationCenter.current().add(request)
-      }
+      MeView()
+        .tabItem {
+          Label("Me", systemImage: "person.crop.square")
+        }
     }
   }
 }
