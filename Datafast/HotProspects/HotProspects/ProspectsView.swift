@@ -53,6 +53,10 @@ struct ProspectsView: View {
               prospect.isContacted.toggle()
             }
                    .tint(.green)
+            Button("Recuerdame", systemImage: "bell") {
+              addNotification(for: prospect)
+            }
+            .tint(.orange)
           }
         }
         .tag(prospect)
@@ -110,11 +114,11 @@ struct ProspectsView: View {
       content.subtitle = prospect.emailAddress
       content.sound = UNNotificationSound.default
 
-//      var dateComponents = DateComponents()
-//      dateComponents.hour = 9
-//
-//      let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, 
-//                                                  repeats: false)
+      //      var dateComponents = DateComponents()
+      //      dateComponents.hour = 9
+      //
+      //      let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents,
+      //                                                  repeats: false)
 
       let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5,
                                                       repeats: false)
