@@ -34,6 +34,21 @@ struct ProspectsView: View {
           Text(prospect.emailAddress)
             .foregroundStyle(.secondary)
         }
+        .swipeActions {
+          if prospect.isContacted {
+            Button("Marcar como no contactado",
+                   systemImage: "person.crop.circle.fill.badge.xmark") {
+              prospect.isContacted.toggle()
+            }
+                   .tint(.blue)
+          } else {
+            Button("Marcar como contactado",
+                   systemImage: "person.crop.circle.badge.checkmark") {
+              prospect.isContacted.toggle()
+            }
+                   .tint(.green)
+          }
+        }
       }
       .navigationTitle(title)
       .toolbar {
