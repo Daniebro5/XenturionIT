@@ -28,11 +28,17 @@ struct ContentView: View {
             }
           }
         }
+        .onDelete(perform: deleteBooks)
       }
       .navigationTitle("Bookworm")
       .toolbar {
-        Button("Add Book", systemImage: "plus") {
-          showingAddScreen.toggle()
+        ToolbarItem(placement: .topBarTrailing) {
+          Button("Add Book", systemImage: "plus") {
+            showingAddScreen.toggle()
+          }
+        }
+        ToolbarItem(placement: .topBarLeading) {
+          EditButton()
         }
       }
       .navigationDestination(for: Book.self) { book in
@@ -41,6 +47,16 @@ struct ContentView: View {
     }
     .sheet(isPresented: $showingAddScreen) {
       AddBookView()
+    }
+  }
+
+  func deleteBooks(at offsets: IndexSet) {
+    for offset in offsets {
+      // encontramos el libro en el query
+      let book = books[offset]
+
+      // eliminamos el libro del contexto
+      modelContext.delete(book)
     }
   }
 }
