@@ -14,8 +14,16 @@ struct ProspectsView: View {
 
   var body: some View {
     NavigationStack {
-      Text("Hola")
+      Text("Personas: \(prospects.count)")
         .navigationTitle(title)
+        .toolbar {
+          Button("Scan", systemImage: "qrcode.viewfinder") {
+            let prospect = Prospect(name: "Danni André",
+                                    emailAddress: "danni.andre@icloud.com",
+                                    isContacted: false)
+            modelContext.insert(prospect)
+          }
+        }
     }
   }
 
