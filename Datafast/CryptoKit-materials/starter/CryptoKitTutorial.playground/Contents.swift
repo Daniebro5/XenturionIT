@@ -54,32 +54,51 @@ let data = getData(for: "Baby", of: "png")
 UIImage(data: data)
 
 // Create a digest of `data`:
+let digest = SHA256.hash(data: data)
 
 
 // Dumbledore sends`data` and `digest` to Harry,
 // who hashes `data` and checks that digests match.
-
+let receivedDataDigest = SHA256.hash(data: data)
+if digest == receivedDataDigest {
+  print("los datos recibidos están integros")
+}
 
 
 // Get String representation of `digest`:
 
 
 // Small change in `data` produces completely different digest:
-String(describing: SHA512.hash(data: "Harry is a horcrux".data(using: .utf8)!))
 String(describing: SHA256.hash(data: "Harry is a horcrux".data(using: .utf8)!))
+String(describing: SHA256.hash(data: "Harry is a horcrux.".data(using: .utf8)!))
+
+print(String(describing: digest))
 //: ## HMAC: Hash-based Message Authentication Code
 //: Use a symmetric cryptographic key when creating the digest
 //: so the receiver knows it’s from you, or a server can check
 //: that you’re authorized to upload files.
 // Create a 256-bit symmetric key
+// clave simetrica significa que el sender y el receiver ambos conocen la clave privada
+// Clave simetrica permite a ambos (sender y receiver) crear sus pares de claves interna y externa para firmar y decodificar
+// Es como tener una caja y un candado (que requiere llave tanto al abrir como para cerrar), ambos usuarios tendrian copia de la llave (firmo el digest y envio en la caja)
 
 // Create a keyed digest of data
-
+let key256 = SymmetricKey(size: .bits256)
+let sha512MAC = HMAC<SHA256>.authenticationCode(for: data, using: key256)
+String(describing: sha512MAC)
 
 // Convert signature to Data
+let authenticationCodeData = Data(sha512MAC)
 
 // Dumbledore sends data and signature to Harry, who checks the signature:
-
+if HMAC<SHA512>.isValidAuthenticationCode(authenticationCodeData,
+                                          authenticating: data,
+                                          using: key256) {
+  print("El HMAC corresponde a los datos \(data)")
+  UIImage(data: data)
+} else {
+  print("nos han hackeado!")
+}
 
 
 
