@@ -215,3 +215,41 @@ if ADSymmetricKey == HPSymmetricKey {
   print("Se estan comunicando de manera segura")
 }
 //: Now Dumbledore and Harry can use symmetric key cryptography to authenticate or encrypt data.
+
+// ******* Interactuando con el secureEnclave *****
+
+
+// verificamos si el dispositivo tiene el chip
+if SecureEnclave.isAvailable {
+
+  // generamos la clave
+  let privateKey = try SecureEnclave.P256.Signing.PrivateKey()
+
+  // creamos la clave publica
+  let publicKeyData = privateKey.publicKey.compactRepresentation!
+
+  // producimos una firma
+  let dataSignature = try privateKey.signature(for: data)
+  let digestSignature = try privateKey.signature(for: digest)
+
+  let accessControl = SecAccessControlCreateWithFlags(nil,
+                                                      kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                                      [.privateKeyUsage, .userPresence],
+                                                      nil)!
+
+  let privateKey2 = try SecureEnclave.P256.Signing.PrivateKey(accessControl: accessControl)
+
+} else {
+
+  let privateKey = P256.Signing.PrivateKey()
+
+  // creamos la clave publica
+  let publicKeyData = privateKey.publicKey.compactRepresentation!
+
+  // producimos una firma
+  let dataSignature = try privateKey.signature(for: data)
+  let digestSignature = try privateKey.signature(for: digest)
+
+}
+
+
