@@ -104,38 +104,64 @@ if HMAC<SHA512>.isValidAuthenticationCode(authenticationCodeData,
 
 //: ## Authenticated Encryption
 // Create a sealed box with the encrypted data
+let sealedBoxData = try! ChaChaPoly.seal(data, using: key256).combined
+// AES.GCM es un standard en USA
+// combined usamos para enviar por internet
 
 // Send sealed box data over network connection
+let sealedBox = try! ChaChaPoly.SealedBox(combined: sealedBoxData)
 
 
 // Decrypt data with the same key
-
+let decryptedData = try! ChaChaPoly.open(sealedBox, using: key256)
 
 // What else is in the box?
+sealedBox.nonce
+sealedBox.tag
 
 
 // encryptedData isn't an image
-
+let encryptedData = sealedBox.ciphertext
+UIImage(data: encryptedData)
 
 
 //: ## Public-Key Cryptography
+// Crea dos claves MATEMATICAMENTE enlazadas (Numeros primos muuuuuy grandes), mantenemos nuestra clave "privada" en el Keychain o en el SecureEnclave y publico la clave publica.
+// SecureEnclave es un chip (si es físicamente un CHIP)
+// el keychain es un espacio de almacenamiento seguro que usa el secureenclave para encriptar
+
+// tanto el usuario como el servidor (ambos tienen su clave publica publicada, y su correspodiente clave privada guardada) toman su propia clave privada y la clave publica del otro y general un SHARED-SECRET
+
+// Servidor privX - pubY -> (SHAREDSECRET) -> privX-pubB
+// Cliente  privA - pubB -> (SHAREDSECRET) -> privA-pubY
+
+// privX-pubB y privA-pubY se comportan como la misma clave, acabo de obtener una clave simetrica.
+
+
 // Dumbledore wants to send the horcrux image to Harry.
 // He signs it so Harry can verify it's from him.
-
+let albusSigningPrivateKey = Curve25519.Signing.PrivateKey()
 
 
 // Dumbledore publishes `albusSigningPublicKeyData`.
 // Dumbledore signs `data` (or `digest`) with his private key.
-
+let albusSigningPublicKeyData = albusSigningPrivateKey.publicKey.rawRepresentation
+let signatureForData = try! albusSigningPrivateKey.signature(for: data)
 
 // Signing a digest of the data is faster:
-
-
+let digest512 = SHA512.hash(data: data)
+let signatureForDigest = try! albusSigningPrivateKey.signature(for: Data(digest512))
 
 // Dumbledore sends `data`, `digest512` and `signatureForData`
 // or `signatureForDigest` to Harry, who verifies signatures
 // with key created from `albusSigningPublicKeyData`.
-
+let publicKey = try! Curve25519.Signing.PublicKey(rawRepresentation: albusSigningPublicKeyData)
+if publicKey.isValidSignature(signatureForData, for: data) {
+  print("Estoy seguro que fue Albus Dumbledore")
+}
+if publicKey.isValidSignature(signatureForDigest, for: Data(digest512)) {
+  print("Albus me lo envió, y además, están íntegros")
+}
 
 
 
@@ -143,29 +169,49 @@ if HMAC<SHA512>.isValidAuthenticationCode(authenticationCodeData,
 // Dumbledore and Harry create private and public keys for
 // key agreement, and publish the public keys.
 
+let albusPrivateKey = Curve25519.KeyAgreement.PrivateKey()
+let albusPublicKeyData = albusPrivateKey.publicKey.rawRepresentation
+
+let harryPrivateKey = Curve25519.KeyAgreement.PrivateKey()
+let harryPublicKeyData = harryPrivateKey.publicKey.rawRepresentation
 
 
 
 // Dumbledore and Harry must agree on the salt value
 // for creating the symmetric key:
+let protocolSalt = "Horrocruxes de Voldemort".data(using: .utf8)!
 
 
 // Dumbledore uses his private key and Harry's public key
 // to calculate `sharedSecret` and `symmetricKey`.
 
+let harryPublicKey = try! Curve25519.KeyAgreement.PublicKey(rawRepresentation: harryPublicKeyData)
 
+let ADSharedSecret = try! albusPrivateKey.sharedSecretFromKeyAgreement(with: harryPublicKey)
 
+let ADSymmetricKey = ADSharedSecret.hkdfDerivedSymmetricKey(using: SHA256.self,
+                                                            salt: protocolSalt,
+                                                            sharedInfo: Data(),
+                                                            outputByteCount: 32)
 
 
 // Harry uses his private key and Dumbledore's public key
 // to calculate `sharedSecret` and `symmetricKey`.
+let albusPublicKey = try! Curve25519.KeyAgreement.PublicKey(rawRepresentation: albusPublicKeyData)
 
+let HPSharedSecret = try! harryPrivateKey.sharedSecretFromKeyAgreement(with: albusPublicKey)
+
+let HPSymmetricKey = HPSharedSecret.hkdfDerivedSymmetricKey(using: SHA256.self,
+                                                            salt: protocolSalt,
+                                                            sharedInfo: Data(),
+                                                            outputByteCount: 32)
 
 
 
 
 // As if by magic, they produce the same symmetric key!
 
-
-
+if ADSymmetricKey == HPSymmetricKey {
+  print("Se estan comunicando de manera segura")
+}
 //: Now Dumbledore and Harry can use symmetric key cryptography to authenticate or encrypt data.
