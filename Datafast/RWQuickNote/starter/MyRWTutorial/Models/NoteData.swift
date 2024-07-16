@@ -47,11 +47,28 @@ class NoteData: ObservableObject {
   }
 
   func getStoredPassword() -> String {
-    UserDefaults.standard.string(forKey: passwordKey) ?? ""
+    let kcw = KeychainWrapper()
+    if let password = try? kcw.getGenericPasswordFor(
+      account: "RWQuickNote",
+      service: "unlockPassword") {
+      return password
+    }
+
+    return ""
   }
 
   func updateStoredPassword(_ password: String) {
-    UserDefaults.standard.set(password, forKey: passwordKey)
+    let kcw = KeychainWrapper()
+    do {
+      try kcw.storeGenericPasswordFor(
+        account: "RWQuickNote",
+        service: "unlockPassword",
+        password: password)
+    } catch let error as KeychainWrapperError {
+      print("Exception getting password: \(error.message ?? "No Message")")
+    } catch {
+      print("Ocurrio un error que no esperabamos")
+    }
   }
 
   func validatePassword(_ password: String) -> Bool {
