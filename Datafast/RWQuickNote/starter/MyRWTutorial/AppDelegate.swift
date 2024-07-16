@@ -34,3 +34,14 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate { }
+
+
+// Keychain - espacio de almacenamiento seguro para items pequeños
+
+// kSecClassInternetPassword - almacena una clave de internet
+// kSecClassGenericPassword - almacena cualquier contraseña
+// kSecClassCertificate almacena certificados
+// kSecClassKey - almacena una clave secreta (private-public key)
+// kSecClassIdentity - almacena una Identidad (Almancena roles)
+
+
