@@ -45,3 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { }
 // kSecClassIdentity - almacena una Identidad (Almancena roles)
 
 
+// "La autenticacion perfecta de 3 capas"
+// algo que sé (PIN - PATRON)
+// algo que soy (BIOMETRICOS)
+// algo que tengo (llaves de seguridad)

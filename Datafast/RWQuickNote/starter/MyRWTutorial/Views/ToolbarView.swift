@@ -30,6 +30,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import LocalAuthentication
 import SwiftUI
 
 // swiftlint:disable multiple_closures_with_trailing_closure
@@ -91,8 +92,7 @@ struct ToolbarView: View {
       Button(
         action: {
           if self.noteLocked {
-            // Biometric Authentication Point
-            self.showUnlockModal = true
+            self.tryBiometricAuthentication()
           } else {
             self.noteLocked = true
           }
@@ -117,6 +117,33 @@ struct ToolbarView: View {
       }
     }
     .frame(height: 64)
+  }
+
+  func tryBiometricAuthentication() {
+    let context = LAContext()
+    var error: NSError?
+
+    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, 
+                                 error: &error) {
+      let reason = "Autenticate para desbloquear la nota"
+      context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { authenticated, error in
+        DispatchQueue.main.async {
+          if authenticated {
+            self.noteLocked = false
+          } else {
+            if let errorString = error?.localizedDescription {
+              print("Error en biometricos \(errorString)")
+            }
+            self.showUnlockModal = true
+          }
+        }
+      }
+    } else {
+      if let errorString = error?.localizedDescription {
+        print("Error en biometricos \(errorString)")
+      }
+      showUnlockModal = true
+    }
   }
 }
 
