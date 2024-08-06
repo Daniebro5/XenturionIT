@@ -17,7 +17,7 @@ struct ContentView: View {
                 Button("Add Expense", systemImage: "plus") {
                     let expense = ExpenseItem(
                         name: "Prueba",
-                        type: "Personal",
+                        type: .personal,
                         amount: 23)
                     expenses.items.append(expense)
                 }
