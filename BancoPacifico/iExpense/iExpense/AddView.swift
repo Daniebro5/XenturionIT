@@ -5,6 +5,10 @@ struct AddView: View {
     @State private var type: ExpenseType = .personal
     @State private var amount = 0.0
 
+    var expenses: Expenses
+
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         NavigationStack {
             Form {
@@ -18,10 +22,16 @@ struct AddView: View {
                     .keyboardType(.decimalPad)
             }
             .navigationTitle("Add New Expense")
+            .toolbar {
+                Button("Save") {
+                    let item = ExpenseItem(name: name, type: type, amount: amount)
+                    expenses.items.append(item)
+                }
+            }
         }
     }
 }
 
 #Preview {
-    AddView()
+    AddView(expenses: Expenses())
 }
