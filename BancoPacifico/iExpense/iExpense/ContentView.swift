@@ -1,29 +1,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showingSheet = false
+
+    @State private var expenses = Expenses()
 
     var body: some View {
-        Button("Show sheet") {
-            showingSheet.toggle()
-        }
-        .sheet(isPresented: $showingSheet) {
-            SecondView(name: "@iamdanniandre")
-        }
-    }
-}
-
-struct SecondView: View {
-
-    @Environment(\.dismiss) var dismiss
-
-    let name: String
-
-    var body: some View {
-        VStack {
-            Text("Hola \(name)!")
-            Button("Dismiss") {
-                dismiss()
+        NavigationStack {
+            List {
+                ForEach(expenses.items, id: \.name) { item in
+                    Text(item.name)
+                }
+            }
+            .navigationTitle("iExpense")
+            .toolbar {
+                Button("Add Expense", systemImage: "plus") {
+                    let expense = ExpenseItem(
+                        name: "Prueba",
+                        type: "Personal",
+                        amount: 23)
+                    expenses.items.append(expense)
+                }
             }
         }
     }
@@ -31,8 +27,4 @@ struct SecondView: View {
 
 #Preview("ContentView") {
     ContentView()
-}
-
-#Preview("SecondView") {
-    SecondView(name: "@iamdanniandre")
 }
