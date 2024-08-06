@@ -1,4 +1,7 @@
-import UIKit
+import Observation
 
-var greeting = "Hello, playground"
-
+@Observable
+class User {
+    var firstName = "Danni"
+    var lastName = "Brito"
+}
