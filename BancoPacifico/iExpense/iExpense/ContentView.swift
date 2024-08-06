@@ -1,7 +1,10 @@
+import Combine
 import SwiftUI
 
-// tipo valor, si es constante ninguna propiedad cambia
-struct User {
+// tipo referencia, podemos compartir el estado en varias partes de la app
+// primero poner estructura, si necesitamos: herencia, referencias (compartir estado), sobrecarga; solo ahí refactorizar al uso de clases
+@Observable
+class User {
     var primerNombre = "Danni"
     var apellido = "Brito"
 }
