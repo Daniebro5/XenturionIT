@@ -2,18 +2,21 @@ import SwiftUI
 
 struct ContentView: View {
 
-    let users = ["Danni", "André", "Daniela", "Rogger"]
-
-    @State private var selection = Set<String>()
+    @State private var selectedTab = "Uno"
 
     var body: some View {
-        List(users, id: \.self, selection: $selection) { user in
-            Text(user)
-        }
-        EditButton()
-        // safe unwrap - desenvoltura segura
-        if !selection.isEmpty {
-            Text("Seleccionaste \(selection.formatted())")
+        TabView(selection: $selectedTab) {
+            Button("Show Tab 2") {
+                selectedTab = "Dos"
+            }
+            .tabItem {
+                Label("Uno", systemImage: "star")
+            }
+            Text("Tab 2")
+                .tabItem {
+                    Label("Dos", systemImage: "circle")
+                }
+                .tag("Dos")
         }
     }
 }
