@@ -4,38 +4,23 @@ import UserNotifications
 struct ContentView: View {
 
     var body: some View {
-        VStack {
-            Button("Request Permission") {
-                UNUserNotificationCenter
-                    .current()
-                    .requestAuthorization(
-                        options: [.alert, .badge, .sound]
-                    ) { success, error in
-                        if success {
-                            print("Gracias!")
-                        } else if let error {
-                            print(error.localizedDescription)
-                        }
+        TabView {
+            ProspectsView(filter: .none)
+                .tabItem {
+                    Label("Everyone", systemImage: "person.3")
                 }
-            }
-
-            Button("Programar Notificacion") {
-                let content = UNMutableNotificationContent()
-                content.title = "Apagar la cocina"
-                content.subtitle = "Se puede quemar el edificio"
-                content.sound = UNNotificationSound.default
-
-                let trigger = UNTimeIntervalNotificationTrigger(
-                    timeInterval: 5,
-                    repeats: false)
-
-                let request = UNNotificationRequest(
-                    identifier: UUID().uuidString,
-                    content: content,
-                    trigger: trigger)
-
-                UNUserNotificationCenter.current().add(request)
-            }
+            ProspectsView(filter: .contacted)
+                .tabItem {
+                    Label("Contacted", systemImage: "checkmark.circle")
+                }
+            ProspectsView(filter: .uncontacted)
+                .tabItem {
+                    Label("Uncontacted", systemImage: "questionmark.diamond")
+                }
+            MeView()
+                .tabItem {
+                    Label("Me", systemImage: "person.crop.square")
+                }
         }
     }
 }
