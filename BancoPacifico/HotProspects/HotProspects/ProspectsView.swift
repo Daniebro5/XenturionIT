@@ -31,6 +31,26 @@ struct ProspectsView: View {
                     Text(prospect.emailAddress)
                         .foregroundStyle(.secondary)
                 }
+                .swipeActions {
+                    Button("Delete", systemImage: "trash", role: .destructive) {
+                        modelContext.delete(prospect)
+                    }
+                    if prospect.isContacted {
+                        Button("Mark Uncontacted",
+                               systemImage: "person.crop.circle.badge.xmark"
+                        ) {
+                            prospect.isContacted.toggle()
+                        }
+                        .tint(.blue)
+                    } else {
+                        Button("Mark Contacted",
+                               systemImage: "person.crop.circle.fill.badge.checkmark"
+                        ) {
+                            prospect.isContacted.toggle()
+                        }
+                        .tint(.green)
+                    }
+                }
             }
         }
     }
