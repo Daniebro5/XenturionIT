@@ -2,33 +2,25 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @State private var backgroundColor = Color.red
-
     var body: some View {
-        // context menu recomendaciones:
-        //  o no usarlo o usarlo en muchos lugares, porque si el usuario descubre uno, va a querer mantener presionado muchos otros elementos para descubir menus ocultos
-        // mantengan la lista de opciones corta
-        // no repitas opciones si ya la tienes en la app
-        // no ocultes en context menus acciones importantes
-        VStack {
-            Text("Hello, World!")
-                .padding()
-                .background(backgroundColor)
-
-            Text("Change Color")
-                .padding()
-                .contextMenu {
-                    Button("Red") {
-                        backgroundColor = .red
+        List {
+            Text("Tierra Canela")
+            // recomendaciones de swipeActions
+            // como estan ocultos no ocultar info importante aqui
+            // utilizar los que son por defecto al menos
+                .swipeActions {
+                    Button("Delete",
+                           systemImage: "minus.circle",
+                           role: .destructive
+                    ) {
+                        print("eliminando")
                     }
-
-                    Button("Green") {
-                        backgroundColor = .green
+                }
+                .swipeActions(edge: .leading) {
+                    Button("Pin", systemImage: "pin") {
+                        print("Pinning")
                     }
-
-                    Button("Blue") {
-                        backgroundColor = .blue
-                    }
+                    .tint(.indigo)
                 }
         }
     }
