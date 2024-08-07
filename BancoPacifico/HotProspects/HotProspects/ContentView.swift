@@ -2,30 +2,34 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @State private var output = ""
+    @State private var backgroundColor = Color.red
 
     var body: some View {
-        Text(output)
-        // ejecuta codigo en otro hilo de ejecucion apenas aparezca la vista
-            .task {
-                // await quiere decir que la funcion llamada se encuentra en un contexto asincrono
-                // el hilo principal siempre esta reservado para tareas de UI
-                await fetchReadings()
-            }
-    }
+        // context menu recomendaciones:
+        //  o no usarlo o usarlo en muchos lugares, porque si el usuario descubre uno, va a querer mantener presionado muchos otros elementos para descubir menus ocultos
+        // mantengan la lista de opciones corta
+        // no repitas opciones si ya la tienes en la app
+        // no ocultes en context menus acciones importantes
+        VStack {
+            Text("Hello, World!")
+                .padding()
+                .background(backgroundColor)
 
-    func fetchReadings() async {
-        do {
-            // Creamos la URL
-            let url = URL(string: "https://hws.dev/readings.json")!
-            // Obtenemos la data con el URLSession
-            let (data, _) = try await URLSession.shared.data(from: url)
-            // Decodificamos
-            let readings = try JSONDecoder().decode([Double].self,
-                                                    from: data)
-            output = "He encontrado \(readings.count) lecturas"
-        } catch {
-            print("Error de descarga")
+            Text("Change Color")
+                .padding()
+                .contextMenu {
+                    Button("Red") {
+                        backgroundColor = .red
+                    }
+
+                    Button("Green") {
+                        backgroundColor = .green
+                    }
+
+                    Button("Blue") {
+                        backgroundColor = .blue
+                    }
+                }
         }
     }
 }
