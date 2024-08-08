@@ -33,6 +33,8 @@ struct DetailView: View {
     }
 }
 
+
+
 // Hashable
 
 #Preview {
