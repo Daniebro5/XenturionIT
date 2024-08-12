@@ -3,22 +3,15 @@ import SwiftUI
 struct ContentView: View {
 
     var body: some View {
-        Form {
-            // agrupen items relacionados
-            Section {
-                Text("Hello, World!")
-                Text("Hello, World!")
-                Text("Hello, World!")
+        NavigationStack {
+            Form {
+                Section {
+                    Text("Hello, World!")
+                }
             }
-            Section {
-                Text("Hello, World!")
-                Text("Hello, World!")
-                Text("Hello, World!")
-                Text("Hello, World!")
-                Text("Hello, World!")
-            }
-
+            .navigationTitle("SwiftUI")
         }
+
     }
 }
 
