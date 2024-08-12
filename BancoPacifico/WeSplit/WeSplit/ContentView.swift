@@ -6,18 +6,11 @@ struct ContentView: View {
 
     var body: some View {
         Form {
-            // lectura y escritura (con $)
-            TextField("Ingresa tu nombre", text: $name)
-            // lectura (sin $)
-            Text("Your name is: \(name)")
+            ForEach(0 ..< 100) {
+                Text("Fila \($0)")
+            }
         }
     }
-
-    // muestra el valor de la propiedad
-    // name
-    // muestra el valor de la propiedad y escribe los nuevos cambios si es necesario
-    // two way binding (lectura - escritura)
-    // $name
 }
 
 #Preview("Light") {
