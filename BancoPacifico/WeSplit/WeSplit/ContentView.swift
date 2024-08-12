@@ -2,18 +2,22 @@ import SwiftUI
 
 struct ContentView: View {
 
-    // Las vistas son una funcion de su estado
-    // es decir es la manera en que la interfaz de usuario luce, dependiendo del estado de la aplicacion
-
-    // state me permite q esta variable sea mutabvle (algo que no se puede en las estructuras)
-    // State especificamente diseñado para propiedades simples que serán almacenadas en una sola vista
-    @State private var tapCount = 0
+    @State var name = ""
 
     var body: some View {
-        Button("Tap count: \(tapCount)") {
-            tapCount += 1
+        Form {
+            // lectura y escritura (con $)
+            TextField("Ingresa tu nombre", text: $name)
+            // lectura (sin $)
+            Text("Your name is: \(name)")
         }
     }
+
+    // muestra el valor de la propiedad
+    // name
+    // muestra el valor de la propiedad y escribe los nuevos cambios si es necesario
+    // two way binding (lectura - escritura)
+    // $name
 }
 
 #Preview("Light") {
@@ -25,7 +29,3 @@ struct ContentView: View {
     ContentView()
         .preferredColorScheme(.dark)
 }
-
-// struct vs clase
-// la estructura es inmutable
-// let a = ContentView()
