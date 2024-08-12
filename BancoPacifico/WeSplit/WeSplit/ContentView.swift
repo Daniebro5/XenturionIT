@@ -21,7 +21,7 @@ struct ContentView: View {
                 )
                 .keyboardType(.decimalPad)
 
-                Picker("Numero de Personas", 
+                Picker("Numero de Personas",
                        selection: $numeroDePersonas) {
                     ForEach(0 ..< 100) {
                         Text("\($0) personas")
@@ -33,8 +33,22 @@ struct ContentView: View {
             }
 
             Section {
+                Text("Cuanta propina deseas dejar?")
+                Picker("Porcentaje de propina",
+                       selection: $propina) {
+                    ForEach(propinas, id: \.self) {
+                        Text($0, format: .percent)
+                    }
+                }
+                // usaremos este picker con selecciones cortas y una lista pequeña
+                       .pickerStyle(.segmented)
+            }
+
+            Section {
                 Text(valorTotal, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
             }
+
+
         }
     }
 }
