@@ -20,6 +20,16 @@ struct ContentView: View {
                           format: .currency(code: Locale.current.currency?.identifier ?? "USD")
                 )
                 .keyboardType(.decimalPad)
+
+                Picker("Numero de Personas", 
+                       selection: $numeroDePersonas) {
+                    ForEach(0 ..< 100) {
+                        Text("\($0) personas")
+                    }
+
+                    // valor    2-3-4-5-......
+                    // posicion 0-1-2-3-4-5-6-
+                }
             }
 
             Section {
