@@ -9,6 +9,19 @@ struct ContentView: View {
 
     let propinas = [10, 15, 20, 25, 0]
 
+    // propiedad computada para el valor total
+    // usemos propiedades computadas, ya que estas se integran bastante bien con el redibujado de las vistas en swiftUI
+    var totalPorPersona: Double {
+        let cantidadDePersonas = Double(numeroDePersonas + 2)
+        let seleccionPropina = Double(propina)
+
+        let valorPropina = valorTotal / 100.0 * seleccionPropina
+        let granTotal = valorTotal + valorPropina
+        let valorPorPersona = granTotal / cantidadDePersonas
+
+        return valorPorPersona
+    }
+
     var body: some View {
         Form {
             Section {
@@ -23,7 +36,7 @@ struct ContentView: View {
 
                 Picker("Numero de Personas",
                        selection: $numeroDePersonas) {
-                    ForEach(0 ..< 100) {
+                    ForEach(2 ..< 100) {
                         Text("\($0) personas")
                     }
 
@@ -45,10 +58,8 @@ struct ContentView: View {
             }
 
             Section {
-                Text(valorTotal, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                Text(totalPorPersona, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
             }
-
-
         }
     }
 }
