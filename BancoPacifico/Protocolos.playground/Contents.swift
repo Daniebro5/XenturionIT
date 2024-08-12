@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 print("=== *** PROTOCOLOS *** ===")
@@ -109,3 +110,37 @@ getRandomBool() == getRandomBool()
 // ejemplo de swiftUI
 // hay una pantalla con un toolbar arriba, un tabBar abajo, en el medio hay una grilla de iconos, cada uno tiene un label diciendo que icono es escrito en negrilla y cuando tocas una imagen, un mensaje aparece en pantalla
 // -> some View
+
+print("==== EXTENSIONES")
+
+// nos sirven para añadir funcionalidad a tipos ya creados
+
+
+
+var quote = "     Arrecho nunca muere y si muere, muere arrecho      "
+
+extension String {
+    func recortado() -> String {
+        self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+let recortado = quote.recortado()
+
+
+let personas = ["Danni", "André", "Carlos", "Luiggi"]
+// verificamos si esta vacio
+personas.isEmpty
+
+// verificar que no este vacio
+!personas.isEmpty
+
+extension Collection {
+    var isNotEmpty: Bool {
+        !self.isEmpty
+    }
+
+}
+
+personas.isEmpty
+personas.isNotEmpty
