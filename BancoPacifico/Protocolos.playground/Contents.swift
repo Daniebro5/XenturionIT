@@ -1,4 +1,4 @@
-import UIKit
+import SwiftUI
 
 print("=== *** PROTOCOLOS *** ===")
 // son como algo asi como un contrato, nos deja definir que funcionalidad ESPERAMOS que un tipo de dato soporte, haciendo que el compilador nos asegure que el codigo siga estas reglas
@@ -71,3 +71,41 @@ viajar(distance: 50, using: car)
 viajar(distance: 50, using: bike)
 
 obtenerEstimados(usando: [car, bike], distancia: 150)
+
+
+print("=== *** OPAQUE RETURN TYPES *** ===")
+
+func getRandomNumber() -> some Equatable {
+    Int.random(in: 1 ... 6)
+}
+
+func getRandomBool() -> some Equatable {
+    Bool.random()
+}
+
+// ambos Bool e Int se conforman a EQUATABLE (protocolo que nos deja saber si pueden ser comparados dos tipos iguales para saber si son los mismos),
+struct Danni: Equatable {
+    static func == (lhs: Danni, rhs: Danni) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    var id = "1715748693"
+    var name = "Danni"
+    var apellido = "Brito"
+}
+
+let a = Danni()
+var b = Danni()
+b.name = "André"
+
+if a == b {
+    print("El mismo Danni André")
+}
+
+getRandomNumber() == getRandomNumber()
+
+getRandomBool() == getRandomBool()
+
+// ejemplo de swiftUI
+// hay una pantalla con un toolbar arriba, un tabBar abajo, en el medio hay una grilla de iconos, cada uno tiene un label diciendo que icono es escrito en negrilla y cuando tocas una imagen, un mensaje aparece en pantalla
+// -> some View
