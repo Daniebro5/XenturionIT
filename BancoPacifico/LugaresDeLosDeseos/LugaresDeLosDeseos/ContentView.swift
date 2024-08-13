@@ -19,10 +19,16 @@ struct ContentView: View {
         MapReader { proxy in
             Map(initialPosition: startPosition) {
                 ForEach(locations) { location in
-                    Marker(location.name,
-                           coordinate: CLLocationCoordinate2D(
-                            latitude: location.latitude,
-                            longitude: location.longitude))
+                    Annotation(location.name,
+                               coordinate: location.coordinate) {
+                                    Image(systemName: "star.circle")
+                                        .resizable()
+                                        .foregroundStyle(.red)
+                                    // apple recomienda este tamaño minimo para cosas que se pueda interactuar en pantalla
+                                        .frame(width: 44, height: 44)
+                                        .background(.white)
+                                        .clipShape(.circle)
+                                }
                 }
             }
             .mapStyle(.hybrid)
@@ -39,14 +45,6 @@ struct ContentView: View {
             }
         }
     }
-}
-
-struct Location: Identifiable, Codable, Equatable {
-    let id: UUID
-    var name: String
-    var description: String
-    var latitude: Double
-    var longitude: Double
 }
 
 #Preview {
