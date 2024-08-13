@@ -4,6 +4,7 @@ import SwiftUI
 struct ContentView: View {
 
     @State private var locations = [Location]()
+    @State private var selectedPlace: Location?
 
     let startPosition = MapCameraPosition.region(
         MKCoordinateRegion(
@@ -28,6 +29,9 @@ struct ContentView: View {
                                         .frame(width: 44, height: 44)
                                         .background(.white)
                                         .clipShape(.circle)
+                                        .onLongPressGesture {
+                                            selectedPlace = location
+                                        }
                                 }
                 }
             }
@@ -41,6 +45,15 @@ struct ContentView: View {
                                                latitude: coordinate.latitude,
                                                longitude: coordinate.longitude)
                     locations.append(newLocation)
+                }
+            }
+            // modificador que oculta el modal si no está seleccionado algo
+            // pero muestra el model y pasa el objeto si se selecciona algo
+            .sheet(item: $selectedPlace) { place in
+                EditView(location: place) { newLocation in
+                    if let index = locations.firstIndex(of: place) {
+                        locations[index] = newLocation
+                    }
                 }
             }
         }
