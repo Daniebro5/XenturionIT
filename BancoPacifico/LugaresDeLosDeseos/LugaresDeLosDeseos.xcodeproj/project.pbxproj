@@ -13,6 +13,7 @@
 		951A25802C6BA0E400415A5C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 951A257F2C6BA0E400415A5C /* Preview Assets.xcassets */; };
 		951A25872C6BC4CB00415A5C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951A25862C6BC4CB00415A5C /* Location.swift */; };
 		951A25892C6BC7FF00415A5C /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951A25882C6BC7FF00415A5C /* EditView.swift */; };
+		951A258B2C6BD08400415A5C /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951A258A2C6BD08400415A5C /* Result.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		951A257F2C6BA0E400415A5C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		951A25862C6BC4CB00415A5C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		951A25882C6BC7FF00415A5C /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
+		951A258A2C6BD08400415A5C /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +57,11 @@
 		951A25772C6BA0E100415A5C /* LugaresDeLosDeseos */ = {
 			isa = PBXGroup;
 			children = (
+				951A258C2C6BD08C00415A5C /* Models */,
 				951A25782C6BA0E100415A5C /* LugaresDeLosDeseosApp.swift */,
 				951A257A2C6BA0E100415A5C /* ContentView.swift */,
 				951A257C2C6BA0E300415A5C /* Assets.xcassets */,
 				951A257E2C6BA0E400415A5C /* Preview Content */,
-				951A25862C6BC4CB00415A5C /* Location.swift */,
 				951A25882C6BC7FF00415A5C /* EditView.swift */,
 			);
 			path = LugaresDeLosDeseos;
@@ -71,6 +73,15 @@
 				951A257F2C6BA0E400415A5C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		951A258C2C6BD08C00415A5C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				951A258A2C6BD08400415A5C /* Result.swift */,
+				951A25862C6BC4CB00415A5C /* Location.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				951A257B2C6BA0E100415A5C /* ContentView.swift in Sources */,
+				951A258B2C6BD08400415A5C /* Result.swift in Sources */,
 				951A25872C6BC4CB00415A5C /* Location.swift in Sources */,
 				951A25892C6BC7FF00415A5C /* EditView.swift in Sources */,
 				951A25792C6BA0E100415A5C /* LugaresDeLosDeseosApp.swift in Sources */,
