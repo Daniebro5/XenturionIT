@@ -1,25 +1,43 @@
-import MapKit
+import LocalAuthentication
 import SwiftUI
 
 struct ContentView: View {
 
+    @State private var estaDesbloqueado = false
+
     var body: some View {
-        MapReader { proxy in
-            Map()
-                .onTapGesture { position in
-                    if let coordinate = proxy.convert(position, to: .local) {
-                        print(coordinate)
-                    }
-                }
+        VStack {
+            if estaDesbloqueado {
+                Text("Desbloqueado")
+            } else {
+                Text("Bloqueado")
+            }
         }
-
+        .onAppear(perform: autenticar)
     }
-}
 
-struct Location: Identifiable {
-    let id = UUID()
-    var name: String
-    var coordinate: CLLocationCoordinate2D
+    func autenticar() {
+        let context = LAContext()
+
+        var error: NSError?
+
+        // chequeamos si la autenticacion biometrica es posible
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                     error: &error) {
+            // es posible entoces usemoslo
+            let reason = "Necesitamos desbloquear tus datos"
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authError in
+                // autenticacion completa
+                if success {
+                    estaDesbloqueado = true
+                } else {
+                    // existio un problema
+                }
+            }
+        } else {
+            // no existen biometricos disponibles
+        }
+    }
 }
 
 #Preview {
