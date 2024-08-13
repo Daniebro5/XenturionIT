@@ -1,34 +1,26 @@
 import SwiftUI
 
 struct ContentView: View {
-
-    let users = [
-        User(firstName: "Arnold", lastName: "Rimmer"),
-        User(firstName: "Kristine", lastName: "Kochanski"),
-        User(firstName: "David", lastName: "Lister"),
-    ].sorted()
-
     var body: some View {
-        List(users) { user in
-            Text("\(user.lastName), \(user.firstName)")
+        Button("Read and Write") {
+            let data = Data("Mensaje de prueba".utf8)
+            let url = URL.documentsDirectory.appending(path: "mensaje.txt")
+
+            do {
+                try data.write(to: url,
+                               options: [
+                                .atomic,
+                                    .completeFileProtection
+                               ])
+                let input = try String(contentsOf: url)
+                print(input)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }
 
 #Preview {
     ContentView()
-}
-
-struct User: Identifiable, Comparable {
-    let id = UUID()
-    var firstName: String
-    var lastName: String
-
-    // Sobrecarga de operadores
-    // left-right hand side (user1) < (user2)
-    static func < (lhs: User, rhs: User) -> Bool {
-        lhs.lastName < rhs.lastName
-    }
-
-    // comparable tambien nos da el operador >, solo hace flip del booleano del operador <
 }
