@@ -18,38 +18,47 @@ struct ContentView: View {
     )
 
     var body: some View {
-        MapReader { proxy in
-            Map(initialPosition: startPosition) {
-                ForEach(viewModel.locations) { location in
-                    Annotation(location.name,
-                               coordinate: location.coordinate) {
-                                    Image(systemName: "star.circle")
-                                        .resizable()
-                                        .foregroundStyle(.red)
-                                    // apple recomienda este tamaño minimo para cosas que se pueda interactuar en pantalla
-                                        .frame(width: 44, height: 44)
-                                        .background(.white)
-                                        .clipShape(.circle)
-                                        .onLongPressGesture {
-                                            viewModel.selectedPlace = location
-                                        }
+
+        if viewModel.isUnlocked {
+            MapReader { proxy in
+                Map(initialPosition: startPosition) {
+                    ForEach(viewModel.locations) { location in
+                        Annotation(location.name,
+                                   coordinate: location.coordinate) {
+                            Image(systemName: "star.circle")
+                                .resizable()
+                                .foregroundStyle(.red)
+                            // apple recomienda este tamaño minimo para cosas que se pueda interactuar en pantalla
+                                .frame(width: 44, height: 44)
+                                .background(.white)
+                                .clipShape(.circle)
+                                .onLongPressGesture {
+                                    viewModel.selectedPlace = location
                                 }
+                        }
+                    }
+                }
+                .mapStyle(.hybrid)
+                .onTapGesture { position in
+                    if let coordinate = proxy.convert(position,
+                                                      from: .local) {
+                        viewModel.addLocation(at: coordinate)
+                    }
+                }
+                // modificador que oculta el modal si no está seleccionado algo
+                // pero muestra el model y pasa el objeto si se selecciona algo
+                .sheet(item: $viewModel.selectedPlace) { place in
+                    EditView(location: place) {
+                        viewModel.update(location: $0)
+                    }
                 }
             }
-            .mapStyle(.hybrid)
-            .onTapGesture { position in
-                if let coordinate = proxy.convert(position,
-                                                  from: .local) {
-                    viewModel.addLocation(at: coordinate)
-                }
-            }
-            // modificador que oculta el modal si no está seleccionado algo
-            // pero muestra el model y pasa el objeto si se selecciona algo
-            .sheet(item: $viewModel.selectedPlace) { place in
-                EditView(location: place) {
-                    viewModel.update(location: $0)
-                }
-            }
+        } else {
+            Button("Unlock Places", action: viewModel.authenticate)
+                .padding()
+                .background(.blue)
+                .foregroundStyle(.white)
+                .clipShape(.capsule)
         }
     }
 }
