@@ -3,8 +3,9 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @State private var locations = [Location]()
-    @State private var selectedPlace: Location?
+    // aqui se ve xq es bueno poner el viewmodel en la extension, solo decimos ViewModel() y automaticamente obtenemos el correcto para nuestra vista
+
+    @ObservedObject private var viewModel = ViewModel()
 
     let startPosition = MapCameraPosition.region(
         MKCoordinateRegion(
@@ -19,7 +20,7 @@ struct ContentView: View {
     var body: some View {
         MapReader { proxy in
             Map(initialPosition: startPosition) {
-                ForEach(locations) { location in
+                ForEach(viewModel.locations) { location in
                     Annotation(location.name,
                                coordinate: location.coordinate) {
                                     Image(systemName: "star.circle")
@@ -30,7 +31,7 @@ struct ContentView: View {
                                         .background(.white)
                                         .clipShape(.circle)
                                         .onLongPressGesture {
-                                            selectedPlace = location
+                                            viewModel.selectedPlace = location
                                         }
                                 }
                 }
@@ -39,21 +40,14 @@ struct ContentView: View {
             .onTapGesture { position in
                 if let coordinate = proxy.convert(position,
                                                   from: .local) {
-                    let newLocation = Location(id: UUID(),
-                                               name: "New Location",
-                                               description: "",
-                                               latitude: coordinate.latitude,
-                                               longitude: coordinate.longitude)
-                    locations.append(newLocation)
+                    viewModel.addLocation(at: coordinate)
                 }
             }
             // modificador que oculta el modal si no está seleccionado algo
             // pero muestra el model y pasa el objeto si se selecciona algo
-            .sheet(item: $selectedPlace) { place in
-                EditView(location: place) { newLocation in
-                    if let index = locations.firstIndex(of: place) {
-                        locations[index] = newLocation
-                    }
+            .sheet(item: $viewModel.selectedPlace) { place in
+                EditView(location: place) {
+                    viewModel.update(location: $0)
                 }
             }
         }

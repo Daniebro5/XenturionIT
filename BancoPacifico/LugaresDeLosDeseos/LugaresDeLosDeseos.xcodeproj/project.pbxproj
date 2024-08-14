@@ -14,6 +14,7 @@
 		951A25872C6BC4CB00415A5C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951A25862C6BC4CB00415A5C /* Location.swift */; };
 		951A25892C6BC7FF00415A5C /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951A25882C6BC7FF00415A5C /* EditView.swift */; };
 		951A258B2C6BD08400415A5C /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951A258A2C6BD08400415A5C /* Result.swift */; };
+		951A258E2C6CF31800415A5C /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951A258D2C6CF31800415A5C /* ContentView-ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		951A25862C6BC4CB00415A5C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		951A25882C6BC7FF00415A5C /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		951A258A2C6BD08400415A5C /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		951A258D2C6CF31800415A5C /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				951A257C2C6BA0E300415A5C /* Assets.xcassets */,
 				951A257E2C6BA0E400415A5C /* Preview Content */,
 				951A25882C6BC7FF00415A5C /* EditView.swift */,
+				951A258D2C6CF31800415A5C /* ContentView-ViewModel.swift */,
 			);
 			path = LugaresDeLosDeseos;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				951A257B2C6BA0E100415A5C /* ContentView.swift in Sources */,
+				951A258E2C6CF31800415A5C /* ContentView-ViewModel.swift in Sources */,
 				951A258B2C6BD08400415A5C /* Result.swift in Sources */,
 				951A25872C6BC4CB00415A5C /* Location.swift in Sources */,
 				951A25892C6BC7FF00415A5C /* EditView.swift in Sources */,
