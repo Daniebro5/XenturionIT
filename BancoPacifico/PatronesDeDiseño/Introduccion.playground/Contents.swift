@@ -23,12 +23,20 @@ soluciones probadas a problemas comunes en el proceso de desarrollo de software.
     e. Facade (Fachada, una interfaz de botones que oculta toda una fabrica)
 
 3. patrones de comportamiento
-    como las reglas de transito, definen como los diferentes obketos interactuan entre si, se comunican y coordinan
+    como las reglas de transito, definen como los diferentes objetos interactuan entre si, se comunican y coordinan
     a. Observer (suscribirse a un canal de youtube)
     b. Strategy (escoger una estrategia en un juego de aventura)
     c. command (dar ordenes a mi peloton)
     d. State (cambiar de modo un aparato electronico, el estado de las vistas en swiftUI)
     e. Iterator (para pasar pagina en un libro)
+
+
+******** Importancia
+ 1. reutilizacion de conocimiento
+ 2. mejora en la comunicacion
+ 3. codigo sera mas mantenible
+ 4. facilitamos escalabilidad
+ 5. son SOLUCIONES PROBADAS, no reiventemos el agua tibia
 
 
  */
