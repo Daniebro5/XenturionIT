@@ -246,3 +246,59 @@ miSanduche.mostrar()
 // 2. para crear objetos que no se pueden modificar
 // 3. permite q el proceso de construccion sea flexible, añadidiendo o modificando los mismo parametros si se quiere
 
+print("\n=== Prototype ===")
+// nos ayuda a crear objetos a partir de una instancia existente, es decir nos dará un CLON de la instancia (no una copia)
+// copia es una referencia a la instancia original, CLON se refiere a que "copie" los valores de la instancia original pero es un objeto independiente
+
+let miSanducheOriginal = Sanduche()
+let miSanducheCopia = miSanducheOriginal
+
+// este protocolo me permite clonar objetos
+final class Personaje: NSCopying {
+    var tipo: String
+    var habilidad: String
+    var comidaFavorita: Sanduche?
+
+    init(tipo: String, habilidad: String, comidaFavorita: Sanduche? = nil) {
+        self.tipo = tipo
+        self.habilidad = habilidad
+        self.comidaFavorita = comidaFavorita
+    }
+
+    func copy(with zone: NSZone? = nil) -> Any {
+        // Shadow Copy
+        return Personaje(tipo: self.tipo,
+                         habilidad: self.habilidad)
+        // deep copy
+        return Personaje(tipo: self.tipo,
+                         habilidad: self.habilidad,
+                         comidaFavorita: comidaFavorita
+        )
+    }
+
+    func mostrar() {
+        print("\(tipo) con habilidad \(habilidad)")
+    }
+}
+
+let guerrero = Personaje(tipo: "Guerrero", habilidad: "Espada")
+let clonGuerrero = guerrero.copy() as? Personaje
+clonGuerrero?.habilidad = "Pistola"
+
+guerrero.mostrar()
+clonGuerrero?.mostrar()
+
+//....
+
+// cuando usarlo?
+// aplicamos prototype al querer clonar una instancia en lugar de copiarla y hacer referencia a la original
+// util cuando queremos crear "hijos" de la clase original con pequeñas modificaciones, asi no pasamos por el proceso entero de creacion
+
+// casos de uso comunes
+// construccion de documentos, objetos que toman muchos pasos (su flujo) es muy complejo y largo
+
+// TIPS:
+// 1. aseguremonos de incluir el protocolo NSCopying
+// 2. util para reducir el costo de crear instancias super complejas de objetos
+// 3. tener en cuenta si el objeto original tiene referencias a otros y si queremos mantebner esas referencias (deep copy) o queremos un nuevo objeto limpio de referencias (shadow copy)
+
