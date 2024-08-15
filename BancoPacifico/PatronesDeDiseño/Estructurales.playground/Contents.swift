@@ -223,3 +223,50 @@ para simplificar una interfaz compleja o un sistema complejo para que sea mas fa
  3. facade puede ser implementado por delante de los adapters para incluir un amplio rango de soluciones
 */
 
+print("=== PROXY ===")
+// un objeto que actua en representacion de otro (o lo sustituye), controla el acceso o proporciona funcionalidades adicionales
+// un representante de una celebridad es quien habla con la celebridad y no las empresas directamente
+
+protocol ServicioInternet {
+    func conectarASitioWeb(url: String)
+}
+
+final class ServicioInternetNetlife: ServicioInternet {
+    func conectarASitioWeb(url: String) {
+        print("conectando a \(url)")
+    }
+}
+
+final class Proxy: ServicioInternet {
+    private var objetoMegaPesado: Int?
+    private var servicioReal = ServicioInternetNetlife()
+    private let sitiosBloqueados = ["tinder.com", "cuevana.com", "tarjetaroja.com"]
+
+    func conectarASitioWeb(url: String) {
+        if sitiosBloqueados.contains(url) {
+            print("Acceso denegado a \(url)")
+        } else {
+            servicioReal.conectarASitioWeb(url: url)
+        }
+    }
+
+    func usarObjetoPesado() {
+        objetoMegaPesado = 10
+    }
+}
+
+let internet = Proxy()
+internet.conectarASitioWeb(url: "tarjetaroja.com")
+internet.conectarASitioWeb(url: "disneyplus.com")
+
+/* cuando usarlo?
+cuando necesitamos un intermediario, ya sea para aplicar controles, mejorar rendimiento, o agragar capacidades adicionales
+
+ casos comunes de uso: control de acceso, red, para reducir latencia, gestion de permisos
+
+ tips:
+ 1. util, para el acceso diferido de un objeto (lazy initialization), si nuestro objeto real es muy pesado, al generar el proxy podriamos definir la regla que, solo se cree este objeto si es utilizado mediante el proxy
+ 2. controlamos el acceso a recurso pesados, como conexiones a bases de datos, o red
+ 3. es util para agregar logica adicional, como caching o analytics antes o despues de acceder al objeto
+*/
+
