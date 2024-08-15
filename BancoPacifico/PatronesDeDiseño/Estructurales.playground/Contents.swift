@@ -167,3 +167,59 @@ cuando queremos añadir responsabilidades extra a un objeto sin alterar su estru
  2. asegurarnos de no cambiar el comportamiento base (unit test)
  3. con composite podemos decorar jerarquias enteras de objetos
 */
+
+print("=== FACADE (FACHADA) ===")
+// proporciona una interfaz simplificada que oculta toda la complejidad
+// un cajero automatico ejecuta accions muy complejas (verificar cedula, verificar cuenta, verificar fondos, verificar destinos, comprobar red.....) pero para el usuario solo hay una interfaz simple con digitos y un par de botones
+
+final class SistemaBanco {
+    func verificarCuenta(cuenta: String) -> Bool {
+        print("verificando cuenta")
+        return Bool.random()
+    }
+
+    func retirarDinero(monto: Int) {
+        print("retirando \(Int.random(in: 10_000 ... 1_000_000))")
+    }
+
+    func depositarDinero(monto: Int) {
+        print("depositar \(Int.random(in: 1 ... 10))")
+    }
+}
+
+// esta es la fachada que oculta la complejidad de un banco
+final class CajeroAutomatico {
+    private let sistemaBanco = SistemaBanco()
+
+    func realizarRetiro(cuenta: String, monto: Int) {
+        if sistemaBanco.verificarCuenta(cuenta: cuenta) {
+            sistemaBanco.retirarDinero(monto: monto)
+        } else {
+            print("cuenta invalida")
+        }
+    }
+
+    func realizarDeposito(cuenta: String, monto: Int) {
+        if sistemaBanco.verificarCuenta(cuenta: cuenta) {
+            sistemaBanco.depositarDinero(monto: monto)
+        } else {
+            print("cuenta invalida")
+        }
+    }
+}
+
+let cajero = CajeroAutomatico()
+cajero.realizarRetiro(cuenta: "12000305646546", monto: 5)
+cajero.realizarDeposito(cuenta: "12000305646546", monto: 10)
+
+/* cuando usarlo?
+para simplificar una interfaz compleja o un sistema complejo para que sea mas facil de usar
+
+ casos comunes de uso: print (una funcion super facil de usar, pero por dentro hace miles de parsings para poner ver los resultados en consola), graficos (construccion de imagenes), APIs complejas
+
+ tips:
+ 1. si es complejo interactuar con algun sistema, puede ser un buen lugar para un Facade
+ 2. aseguremonos de simplificar las cosas, si no se simplifica lo suficiente, puede ser un overkill
+ 3. facade puede ser implementado por delante de los adapters para incluir un amplio rango de soluciones
+*/
+
