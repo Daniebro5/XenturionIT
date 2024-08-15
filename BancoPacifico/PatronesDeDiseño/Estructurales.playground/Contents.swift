@@ -37,3 +37,17 @@ final class AdaptadorAmericanoAEuropeo: EnchufeAmericano {
 let cargadorEuropeo = CargadorEuropeo()
 let adaptador = AdaptadorAmericanoAEuropeo(enchufeEuropeo: cargadorEuropeo)
 adaptador.cargarMiCelEnEcu()
+
+/* cuando usarlo?
+lo usamos para conectar dos clases incompatibles entre si
+
+ casos comunes de uso: al utilizar librerías externas (especialmente de APIs) estas generalmente no coinciden con la estructura de nuestro codigo, por lo q utilizaremos un adapter, incluso al manejar diferentes lenguajes de programacion
+
+ tips:
+ 1. utilizar cuando no puedas (librerias externas) o no quieras (codigo legacy) modificar codigo existente
+ 2. cuando necesitas usar una clase q fue diseñada para un contexto diferente y no quieres duplicar codigo
+
+
+
+
+*/
