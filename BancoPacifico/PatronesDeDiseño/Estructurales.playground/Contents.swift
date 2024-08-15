@@ -270,3 +270,74 @@ cuando necesitamos un intermediario, ya sea para aplicar controles, mejorar rend
  3. es util para agregar logica adicional, como caching o analytics antes o despues de acceder al objeto
 */
 
+print("=== BRIDGE ===")
+// separa la abstraccion de la implementacion para permitir evoluciones en una linea de tiempo separada
+// un representante de una celebridad es quien habla con la celebridad y no las empresas directamente
+
+protocol Dispositivo {
+    var volumen: Int { get set }
+    func encender()
+    func apagar()
+}
+
+final class TV: Dispositivo {
+    func encender() {
+        print("TV Encendida")
+    }
+
+    func apagar() {
+        print("TV apagada y luego algo mas complejo")
+    }
+
+    var volumen: Int = 10
+}
+
+final class EquipoDeSonido: Dispositivo {
+    func encender() {
+        print("EquipoDeSonido Encendido")
+    }
+
+    func apagar() {
+        print("EquipoDeSonido apagado")
+    }
+
+    var volumen: Int = 20
+}
+
+// creamos el bridge (puente)
+final class ControlRemoto {
+    private var dispositivo: Dispositivo
+
+    init(dispositivo: Dispositivo) {
+        self.dispositivo = dispositivo
+    }
+
+    func encender() {
+        dispositivo.encender()
+    }
+
+    func apagar() {
+        dispositivo.apagar()
+    }
+
+    func cambiarVolumen(a volumen: Int) {
+        dispositivo.volumen = volumen
+        print("Volumen cambiado a: \(volumen)")
+    }
+}
+
+let tv = TV()
+let controlTV = ControlRemoto(dispositivo: tv)
+controlTV.encender()
+
+/* cuando usarlo?
+cuando necesitamos un intermediario, ya sea para aplicar controles, mejorar rendimiento, o agragar capacidades adicionales
+
+ casos comunes de uso: control de acceso, red, para reducir latencia, gestion de permisos
+
+ tips:
+ 1. util, para el acceso diferido de un objeto (lazy initialization), si nuestro objeto real es muy pesado, al generar el proxy podriamos definir la regla que, solo se cree este objeto si es utilizado mediante el proxy
+ 2. controlamos el acceso a recurso pesados, como conexiones a bases de datos, o red
+ 3. es util para agregar logica adicional, como caching o analytics antes o despues de acceder al objeto
+*/
+
