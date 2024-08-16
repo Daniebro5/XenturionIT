@@ -1,5 +1,18 @@
 import SwiftUI
 
+enum ErroresDeRed: Error {
+    case adsdasd, cas, casca, casgh
+
+    static func analytics() {
+        // llamar a mi servidor de analytics
+    }
+}
+
+enum RedReultado {
+    case completado
+    case error(error: String)
+}
+
 final class ClaseConFuga {
     var handler: (() -> Void)?
     let value: Int
