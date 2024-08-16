@@ -1,16 +1,20 @@
 import SwiftUI
 
 struct ContentView: View {
-
-    @Environment(\.dynamicTypeSize) var dynamicTypeSize
-
+    @State private var isDarkMode = false
     var body: some View {
-        if dynamicTypeSize >= .accessibility3 {
-            Text("Has seleccionado una fuente mas grande")
-                .padding()
-        } else {
-            Text("Es la fuente regular")
-                .padding()
+        VStack {
+            Button(action: {
+                isDarkMode.toggle()
+            }, label: {
+                Image(systemName: isDarkMode ? "sun.max.fill" : "moon.fill")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(isDarkMode ? Color.black : Color.white)
+                    .foregroundStyle(isDarkMode ? .white : .black)
+                    .clipShape(.capsule)
+                    .ignoresSafeArea()
+            })
+            .accessibilityLabel(Text("Cambia el dark mode. Actualmente, dark mode esta \(isDarkMode ? "activado" : "desactivado")"))
         }
 
     }
