@@ -280,6 +280,68 @@ protocol Dispositivo {
     func apagar()
 }
 
+protocol bankInteractable {
+    func getUsuario()
+    func postTransaccion()
+    func getTransactionDetails()
+}
+
+final class ServicioDeVerdadBanco {
+    // definicion del API
+    func getUserDetails() {
+        // URL
+        // POST
+        // DECODIFICO
+        // respondo
+    }
+}
+
+class ServicioAlAPi: bankInteractable {
+
+    let servicioReal: ServicioDeVerdadBanco?
+
+    init(servicioReal: ServicioDeVerdadBanco?) {
+        self.servicioReal = servicioReal
+    }
+
+    // raw lo solemos tener para obtener los datos basicos como nombre, correo, etc
+    func getUsuarioRaw() {
+        // mi logica para interactuar con el API
+        servicioReal?.getUserDetails()
+    }
+
+    func getUsuarioCompleto() {
+        // mi logica para interactuar con el API
+        servicioReal?.getUserDetails()
+    }
+
+    func postTransaccion() {
+        // mi logica para interactuar con el API
+    }
+    
+    func getTransactionDetails() {
+        // mi logica para interactuar con el API
+    }
+}
+
+final class Home {
+    private var servicioBridge: bankInteractable?
+
+    func obtenerUsuario() {
+        ////////////////
+        ///]
+        servicioBridge?.getUsuario()
+    }
+
+    func validarLogin() {
+
+    }
+
+    func registrar() {
+
+    }
+}
+
 final class TV: Dispositivo {
     func encender() {
         print("TV Encendida")
@@ -341,3 +403,97 @@ cuando necesitamos un intermediario, ya sea para aplicar controles, mejorar rend
  3. es util para agregar logica adicional, como caching o analytics antes o despues de acceder al objeto
 */
 
+print("=== FLYWEIGHT (PESO MOSCA) ===")
+// lo usamos para compartir memoria entre muchos objetos, extraemos propiedades y capacidades similares de los objetos y solo hacemos referencia a esta extraccion
+// en una empresa todos los empleados (millones) tienen una tarjeta de acceso en la cual solo cambia el nombre y su identificacion, esta tarjeta tiene el mismo logo, fondo, telefono, direccion, dueño, etc para todos
+
+
+
+/* cuando usarlo?
+cuando necesitamos un intermediario, ya sea para aplicar controles, mejorar rendimiento, o agragar capacidades adicionales
+
+ casos comunes de uso: control de acceso, red, para reducir latencia, gestion de permisos
+
+ tips:
+ 1. util, para el acceso diferido de un objeto (lazy initialization), si nuestro objeto real es muy pesado, al generar el proxy podriamos definir la regla que, solo se cree este objeto si es utilizado mediante el proxy
+ 2. controlamos el acceso a recurso pesados, como conexiones a bases de datos, o red
+ 3. es util para agregar logica adicional, como caching o analytics antes o despues de acceder al objeto
+*/
+
+final class Empleado {
+    var nombre: String
+    var tarjeta: Tarjeta
+
+    init(nombre: String, tarjeta: Tarjeta) {
+        self.nombre = nombre
+        self.tarjeta = tarjeta
+    }
+}
+
+final class Tarjeta {
+    var nombre: String
+    var diseñoTarjeta: DiseñoTarjeta
+
+    init(nombre: String, diseñoTarjeta: DiseñoTarjeta) {
+        self.nombre = nombre
+        self.diseñoTarjeta = diseñoTarjeta
+    }
+}
+
+final class DiseñoTarjeta {
+    var nombreEmpresa: String
+    var direccionEmpresa: String
+    var numeroEmpresa: String
+    var nombreJefe: String
+
+    init(nombreEmpresa: String = "Xenturion", direccionEmpresa: String = "Guayaquil", numeroEmpresa: String = "1243143245", nombreJefe: String = "André") {
+        self.nombreEmpresa = nombreEmpresa
+        self.direccionEmpresa = direccionEmpresa
+        self.numeroEmpresa = numeroEmpresa
+        self.nombreJefe = nombreJefe
+    }
+}
+
+let diseño = DiseñoTarjeta()
+
+let empleados: [Empleado] = [
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño)),
+    .init(nombre: "danni", tarjeta: .init(nombre: "danni", diseñoTarjeta: diseño))
+]
+
+/* cuando usarlo?
+cuando tenemos muchos objetos que comparten algunos de sus datos, en general son muchiiiiisimos
+
+ casos comunes de uso: por ejemplo la lista de transacciones de un usuario tiene los mismos datos como cuenta origen, nombre origen, banco origen, tipo origen..... lo unico que cambia es el destino y el monto
+
+ tips:
+ 1. tenemos que identificar aquellas propiedades de estado intrinsico, aquellas que se puede compartir
+ 2. tienen que ser propiedades exactamente iguales y no volatiles
+ 3. considerar aplicarlo cuando veamos un desgaste de memoria
+*/
+
+
+
+
+
+// Complejidad          Capas         Escalabilidad         Testing
+//    Baja              1 ó 2              Baja              Baja
+//    Alta               |4|               Alta              Alta
+
+// la clave en la introduccion de arquitecturas o patrones de diseño es el equilibrio entre escalabilidad y complejidad
+
+// nosotros siempre querremos que nuestra app sea la mejor, es mejor hacerlo en etapas tempranas de desarrollo
