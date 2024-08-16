@@ -52,6 +52,41 @@ weak var persona4 = Persona(nombre: "Danni Debil")
 
 // la referencia unowned no aumenta el ARC y me devuelve un objeto no nil
 // sirve cuando estoy completamente seguro que el objeto esta en memoria
-unowned var persona5 = Persona(nombre: "Danni Debil")
+// unowned var persona5 = Persona(nombre: "Danni Debil")
 
 // ARC = 2
+
+// RETAIN CYCLE, ciclo de retencion
+
+final class Dueño {
+    weak var mascota: Mascota?
+
+    init() {
+        print("Dueño creada")
+    }
+
+    deinit {
+        print("Dueño liberada de memoria")
+    }
+}
+
+final class Mascota {
+    var dueño: Dueño?
+
+    init() {
+        print("Mascota creada")
+    }
+
+    deinit {
+        print("Mascota liberada de memoria")
+    }
+}
+
+var daddy: Mascota? = Mascota()
+var danni: Dueño? = Dueño()
+
+daddy?.dueño = danni
+danni?.mascota = daddy
+
+daddy = nil
+danni = nil
