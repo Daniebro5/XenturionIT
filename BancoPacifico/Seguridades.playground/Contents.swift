@@ -139,3 +139,18 @@ if andreClaveSimetrica == paolaClaveSimetrica {
     print("Hemos creado una clave simetrica entre andre y paola")
 }
 
+// SECURE ENCLAVE
+print("===*** SECURE ENCLAVE ***===")
+// los iPhone cuentan con un chip especializado en seguridad y encriptacion, este chip se llama secure enclave
+// nos sirve para ejecutar operaciones de seguridad en un chip especializado, a este no tiene acceso ninguna aplicacion
+// como extra nos permite darle una capa extra de acceso al uso de la clave
+if SecureEnclave.isAvailable {
+    let privateKey = try SecureEnclave.P256.Signing.PrivateKey()
+
+    let accessControl = SecAccessControlCreateWithFlags(nil, kSecAttrAccessibleWhenUnlockedThisDeviceOnly, [.privateKeyUsage, .userPresence], nil)!
+
+    let clavePrivadaConControlDeAcceso = try SecureEnclave.P256.Signing.PrivateKey(accessControl: accessControl)
+} else {
+    let privateKey = P256.Signing.PrivateKey()
+}
+
