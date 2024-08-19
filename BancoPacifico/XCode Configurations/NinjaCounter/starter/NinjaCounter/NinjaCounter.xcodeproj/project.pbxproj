@@ -20,7 +20,7 @@
 		4CA788F226323AF2002E22D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CA788F126323AF2002E22D5 /* Assets.xcassets */; };
 		4CA788F626323AF2002E22D5 /* WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4CA788E826323AF1002E22D5 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4CA788FB26323B8A002E22D5 /* UserDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8BD89325F15F81007FB0C1 /* UserDefaultsHelper.swift */; };
-		4CA788FC26323B90002E22D5 /* Hatchling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8BD89025F15F67007FB0C1 /* Hatchling.swift */; };
+		952E5DE72C73A7930049A359 /* Hatchling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8BD89025F15F67007FB0C1 /* Hatchling.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +63,8 @@
 		4CA788EF26323AF1002E22D5 /* Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
 		4CA788F126323AF2002E22D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4CA788F326323AF2002E22D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		952E5DE52C73A6580049A359 /* NinjaCounter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NinjaCounter.entitlements; sourceTree = "<group>"; };
+		952E5DE62C73A6930049A359 /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 		4C8BD7BA25EDA257007FB0C1 = {
 			isa = PBXGroup;
 			children = (
+				952E5DE62C73A6930049A359 /* WidgetExtension.entitlements */,
 				4C8BD7C525EDA257007FB0C1 /* NinjaCounter */,
 				4CA788EE26323AF1002E22D5 /* Widget */,
 				4CA788E926323AF1002E22D5 /* Frameworks */,
@@ -107,6 +110,7 @@
 		4C8BD7C525EDA257007FB0C1 /* NinjaCounter */ = {
 			isa = PBXGroup;
 			children = (
+				952E5DE52C73A6580049A359 /* NinjaCounter.entitlements */,
 				4C8BD7C625EDA257007FB0C1 /* NinjaCounterApp.swift */,
 				4C8BD7C825EDA257007FB0C1 /* ContentView.swift */,
 				4C8BD89025F15F67007FB0C1 /* Hatchling.swift */,
@@ -283,7 +287,7 @@
 			files = (
 				4CA788FB26323B8A002E22D5 /* UserDefaultsHelper.swift in Sources */,
 				4CA788F026323AF1002E22D5 /* Widget.swift in Sources */,
-				4CA788FC26323B90002E22D5 /* Hatchling.swift in Sources */,
+				952E5DE72C73A7930049A359 /* Hatchling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,8 +424,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NinjaCounter/NinjaCounter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"NinjaCounter/Preview Content\"";
+				DEVELOPMENT_TEAM = 3V88CP9Q7V;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NinjaCounter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -429,7 +435,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.NinjaCounter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dannibrito.NinjaCounter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -442,8 +448,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NinjaCounter/NinjaCounter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"NinjaCounter/Preview Content\"";
+				DEVELOPMENT_TEAM = 3V88CP9Q7V;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NinjaCounter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -451,7 +459,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.NinjaCounter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dannibrito.NinjaCounter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -463,15 +471,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3V88CP9Q7V;
 				INFOPLIST_FILE = widget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.NinjaCounter.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dannibrito.NinjaCounter.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -484,15 +493,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3V88CP9Q7V;
 				INFOPLIST_FILE = widget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.NinjaCounter.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dannibrito.NinjaCounter.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;

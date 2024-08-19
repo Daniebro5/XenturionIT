@@ -33,7 +33,8 @@
 import Foundation
 
 enum UserDefaultsHelper {
-  static private let defaults = UserDefaults.standard
+  // suite name nos dice en que app group debemos nuscar la info
+  static private let defaults = UserDefaults(suiteName: "group.") ?? .standard
 
   static private let recordsKey = "Hatchlings-Records"
 
