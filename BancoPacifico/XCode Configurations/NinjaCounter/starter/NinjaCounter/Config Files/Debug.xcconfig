@@ -1,0 +1,13 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Sintaxis para los archivos de configuracion de XCode es:
+// NOMBRE_CONFIRGURACION = VALOR
+
+// no se utilizan comillas en las cadenas en estos archivos
+// ya que estos se construyen como un diccionario de valores
+APP_NAME = Ninja CounterDev
+
+// MAIN PATH URL
+APP_URL = https://www.miservidorparadebug.com
+MAX_TRANSACTIONS = 100000000
