@@ -85,3 +85,57 @@ if clavePublicaDanni.isValidSignature(firmaParaDigest, for: Data(digest512)) {
     print("Datos recibidos, si son de Danni")
     print(String(data: mensajeDanni, encoding: .utf8)!)
 }
+
+// Usando el Shared Secret para una comunicacion de dos vias
+print("===*** SHARED SECRET ***===")
+// es una caja sellada, en la cual tanto Danni y Jessica tienen una llave
+
+// G es el punto generador del algoritmo de curva eliptica
+// d es la clave privada de danni
+// j es la clave privada de Jessica
+
+// d * G es la clave publica de Danni
+// j * G es la clave publica de Jessica
+
+// (d * G) * j = (j * G) * d -> este es el shared secret
+// - * - * - = - * - * -
+// 1 -> Magia! (Matematicas)
+
+
+let andreClavePrivada = Curve25519.KeyAgreement.PrivateKey()
+// la clave publica (o en este caso sus datos DATA son publicados en internet)
+let andreClavePublicaData = andreClavePrivada.publicKey.rawRepresentation
+
+let paolaClavePrivate = Curve25519.KeyAgreement.PrivateKey()
+// la clave publica (o en este caso sus datos DATA son publicados en internet)
+let paolaClavePublicaData = paolaClavePrivate.publicKey.rawRepresentation
+
+// un mensaje que va a ser la raiz de las comunicaciones, no importa si se filtra
+// xq se va a basar en las claves privadas
+let protocoloSAL = "el amor lo puede todo".data(using: .utf8)!
+
+
+// cada uno va a obtener la clave publica del contrario y lugo la combina con su clave privada para obtener el primer SHAREDSECRET
+
+// del lado de andre
+let paolaClavePublica = try! Curve25519.KeyAgreement.PublicKey(rawRepresentation: paolaClavePublicaData)
+let andreSharedSecret = try! andreClavePrivada.sharedSecretFromKeyAgreement(with: paolaClavePublica)
+let andreClaveSimetrica = andreSharedSecret.hkdfDerivedSymmetricKey(
+    using: SHA256.self,
+    salt: protocoloSAL,
+    sharedInfo: Data(),
+    outputByteCount: 32)
+
+// del lado de andre
+let andreClavePublica = try! Curve25519.KeyAgreement.PublicKey(rawRepresentation: andreClavePublicaData)
+let paolaSharedSecret = try! paolaClavePrivate.sharedSecretFromKeyAgreement(with: andreClavePublica)
+let paolaClaveSimetrica = paolaSharedSecret.hkdfDerivedSymmetricKey(
+    using: SHA256.self,
+    salt: protocoloSAL,
+    sharedInfo: Data(),
+    outputByteCount: 32)
+
+if andreClaveSimetrica == paolaClaveSimetrica {
+    print("Hemos creado una clave simetrica entre andre y paola")
+}
+
